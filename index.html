@@ -5,27 +5,28 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>家庭壶铃训练计划</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap');
-:root{--bg:#0d0f14;--surface:#161a22;--card:#1c2130;--border:#2a3045;--accent:#e8854a;--accent2:#4a9ee8;--gold:#c9a84c;--text:#e8eaf0;--muted:#7a8099;--green:#4ac97a;--r:16px}
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=Noto+Serif+SC:wght@600;700;900&display=swap');
+:root{--bg:#0d0f14;--surface:#161a22;--card:#1c2130;--border:#2a3045;--accent:#e8854a;--accent2:#4a9ee8;--gold:#c9a84c;--text:#e8eaf0;--muted:#7a8099;--green:#4ac97a;--r:16px;--font-sans:'Noto Sans SC','Microsoft YaHei','PingFang SC',Arial,sans-serif;--font-serif:'Noto Serif SC','Source Han Serif SC','Songti SC','SimSun',serif;--font-num:'DIN Alternate','Roboto Mono','SFMono-Regular','Consolas',monospace}
 *{margin:0;padding:0;box-sizing:border-box}
-body{background:var(--bg);color:var(--text);font-family:'Noto Sans SC',sans-serif;font-size:15px;line-height:1.7}
+body{background:radial-gradient(circle at 50% 0,rgba(232,133,74,.08),transparent 42%),var(--bg);color:var(--text);font-family:var(--font-sans);font-size:15px;line-height:1.7;font-feature-settings:"tnum" 1,"liga" 1}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:9999;opacity:.16;background-image:radial-gradient(rgba(255,255,255,.24) .55px,transparent .65px),radial-gradient(rgba(0,0,0,.32) .65px,transparent .75px);background-size:3px 3px,5px 5px;background-position:0 0,1px 2px;mix-blend-mode:overlay}
 nav{position:sticky;top:0;z-index:100;background:rgba(13,15,20,.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 20px;display:flex;align-items:center;gap:6px;overflow-x:auto;scrollbar-width:none;height:54px}
 nav::-webkit-scrollbar{display:none}
-.logo{font-size:16px;font-weight:900;color:var(--accent);white-space:nowrap;margin-right:12px}
+.logo{font-family:var(--font-serif);font-size:16px;font-weight:900;color:var(--accent);white-space:nowrap;margin-right:12px}
 .nb{background:none;border:1px solid var(--border);color:var(--muted);padding:5px 12px;border-radius:20px;cursor:pointer;font-size:12px;white-space:nowrap;transition:all .2s;font-family:inherit}
 .nb:hover,.nb.on{background:var(--accent);border-color:var(--accent);color:#fff}
 .hero{padding:70px 24px 50px;text-align:center;max-width:680px;margin:0 auto}
-.htag{display:inline-block;background:rgba(232,133,74,.12);border:1px solid rgba(232,133,74,.3);color:var(--accent);font-size:11px;font-weight:700;letter-spacing:2px;padding:4px 14px;border-radius:20px;margin-bottom:20px;text-transform:uppercase}
-.hero h1{font-size:clamp(28px,5vw,50px);font-weight:900;line-height:1.1;letter-spacing:-1px;margin-bottom:16px}
+.htag{display:inline-block;background:rgba(232,133,74,.12);border:1px solid rgba(232,133,74,.3);color:var(--accent);font-size:11px;font-weight:700;letter-spacing:0;padding:4px 14px;border-radius:20px;margin-bottom:20px;text-transform:uppercase}
+.hero h1{font-family:var(--font-serif);font-size:clamp(30px,5vw,54px);font-weight:900;line-height:1.08;letter-spacing:0;margin-bottom:16px}
 .hero h1 span{color:var(--accent)}
 .hero p{color:var(--muted);font-size:15px;margin-bottom:30px}
 .stats{display:flex;justify-content:center;gap:40px;flex-wrap:wrap}
-.stat-n{font-size:26px;font-weight:900;color:var(--accent)}
+.stat-n{font-family:var(--font-num);font-size:28px;font-weight:900;color:var(--accent);font-variant-numeric:tabular-nums}
 .stat-l{font-size:11px;color:var(--muted)}
 .sec{max-width:1180px;margin:0 auto;padding:36px 20px}
 .sh{display:flex;align-items:center;gap:14px;margin-bottom:28px}
 .si{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
-.st{font-size:20px;font-weight:900}
+.st{font-family:var(--font-serif);font-size:21px;font-weight:900}
 .ss{font-size:12px;color:var(--muted);margin-top:2px}
 .grid{display:flex;flex-direction:column;gap:22px}
 .card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;display:grid;grid-template-columns:minmax(0,1.55fr) minmax(280px,.72fr);align-items:stretch;transition:border-color .2s,box-shadow .2s}
@@ -39,7 +40,7 @@ nav::-webkit-scrollbar{display:none}
 .wb{position:absolute;top:10px;right:10px;background:rgba(232,133,74,.15);border:1px solid rgba(232,133,74,.4);color:var(--accent);font-size:10px;font-weight:700;padding:3px 9px;border-radius:10px}
 .mb{position:absolute;top:10px;left:10px;background:rgba(74,158,232,.12);border:1px solid rgba(74,158,232,.35);color:var(--accent2);font-size:10px;padding:3px 9px;border-radius:10px}
 .cb{padding:22px;display:flex;flex-direction:column;justify-content:center;min-width:0}
-.cn{font-size:19px;font-weight:800;margin-bottom:3px;line-height:1.25}
+.cn{font-family:var(--font-serif);font-size:20px;font-weight:900;margin-bottom:3px;line-height:1.22}
 .ce{font-size:12px;color:var(--muted);margin-bottom:14px}
 .chips{display:flex;gap:7px;margin-bottom:16px;flex-wrap:wrap}
 .chip{background:rgba(232,133,74,.1);border:1px solid rgba(232,133,74,.22);color:var(--accent);font-size:11px;font-weight:600;padding:3px 9px;border-radius:7px}
@@ -47,7 +48,7 @@ nav::-webkit-scrollbar{display:none}
 .exbtn:hover{background:rgba(255,255,255,.08)}
 .dp{display:none;margin-top:14px;border-top:1px solid var(--border);padding-top:14px;max-height:420px;overflow:auto;padding-right:4px}
 .dp.open{display:block}
-.dl{font-size:10px;font-weight:700;letter-spacing:1px;color:var(--accent);text-transform:uppercase;margin:10px 0 6px}
+.dl{font-size:10px;font-weight:700;letter-spacing:0;color:var(--accent);text-transform:uppercase;margin:10px 0 6px}
 .sl{list-style:none;counter-reset:s}
 .sl li{counter-increment:s;display:flex;gap:8px;font-size:12px;color:var(--muted);margin-bottom:5px;line-height:1.5}
 .sl li::before{content:counter(s);background:var(--accent);color:#fff;font-size:9px;font-weight:700;min-width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
@@ -61,11 +62,11 @@ nav::-webkit-scrollbar{display:none}
 .dc.on{border-color:var(--accent);background:rgba(232,133,74,.07)}
 .dc.rest{opacity:.45}
 .dn{font-size:10px;color:var(--muted);margin-bottom:4px}
-.di{font-size:20px;margin-bottom:4px}
-.df{font-size:10px;font-weight:600}
+.di{font-family:var(--font-num);font-size:22px;margin-bottom:4px;font-variant-numeric:tabular-nums}
+.df{font-size:10px;font-weight:700}
 .tgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:18px}
 .tbox{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px}
-.tbl{font-size:11px;font-weight:700;letter-spacing:1px;margin-bottom:8px}
+.tbl{font-size:11px;font-weight:700;letter-spacing:0;margin-bottom:8px}
 .tcon{font-size:12px;color:var(--muted);line-height:2}
 .tips-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px}
 .tc{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:18px}
@@ -80,15 +81,15 @@ nav::-webkit-scrollbar{display:none}
 .plan-tab{background:rgba(255,255,255,.04);border:1px solid var(--border);color:var(--muted);font-family:inherit;font-size:12px;padding:8px 12px;border-radius:9px;cursor:pointer}
 .plan-tab.active{background:rgba(232,133,74,.14);border-color:rgba(232,133,74,.55);color:var(--accent)}
 .coach-stage{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:16px}
-.coach-kicker{font-size:12px;font-weight:800;color:var(--green);letter-spacing:1px;margin-bottom:4px}
-.coach-title{font-size:28px;font-weight:900;line-height:1.15}
+.coach-kicker{font-size:12px;font-weight:800;color:var(--green);letter-spacing:0;margin-bottom:4px}
+.coach-title{font-family:var(--font-serif);font-size:30px;font-weight:900;line-height:1.12}
 .coach-meta{font-size:12px;color:var(--muted);margin-top:7px}
-.timer{font-size:56px;font-weight:900;font-variant-numeric:tabular-nums;color:var(--accent);line-height:1;min-width:170px;text-align:right}
+.timer{font-family:var(--font-num);font-size:60px;font-weight:900;font-variant-numeric:tabular-nums;color:var(--accent);line-height:1;min-width:170px;text-align:right;text-shadow:0 10px 28px rgba(232,133,74,.18)}
 .coach-player{position:relative;background:#0f141d;border:1px solid var(--border);border-radius:14px;overflow:hidden;margin:0 0 16px}
 .coach-player img{display:block;width:100%;aspect-ratio:16/9;object-fit:contain;background:#0f141d}
 .rep-panel{position:absolute;right:14px;bottom:14px;background:rgba(5,8,12,.78);border:1px solid rgba(255,255,255,.16);border-radius:12px;padding:10px 14px;min-width:128px;text-align:center;backdrop-filter:blur(8px)}
-.rep-label{font-size:10px;color:var(--muted);font-weight:800;letter-spacing:1px}
-.rep-count{font-size:30px;line-height:1.05;font-weight:900;color:var(--green);font-variant-numeric:tabular-nums;margin-top:3px}
+.rep-label{font-size:10px;color:var(--muted);font-weight:800;letter-spacing:0}
+.rep-count{font-family:var(--font-num);font-size:32px;line-height:1.05;font-weight:900;color:var(--green);font-variant-numeric:tabular-nums;margin-top:3px}
 .rep-hint{font-size:10px;color:var(--muted);margin-top:4px}
 .coach-progress{height:10px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);border-radius:999px;overflow:hidden;margin-bottom:12px}
 .coach-progress div{height:100%;width:0;background:linear-gradient(90deg,var(--green),var(--accent));transition:width .25s linear}
@@ -140,14 +141,14 @@ footer{text-align:center;padding:36px 24px;color:var(--muted);font-size:12px;bor
   .logo{font-size:14px;margin-right:6px}
   .nb{font-size:11px;padding:4px 10px}
   .hero{padding:44px 16px 34px}
-  .hero h1{font-size:30px;letter-spacing:0}
+  .hero h1{font-size:32px;letter-spacing:0;line-height:1.08}
   .hero p{font-size:13px;margin-bottom:22px}
   .stats{gap:22px}
-  .stat-n{font-size:22px}
+  .stat-n{font-size:24px}
   .sec{padding:28px 12px}
   .sh{gap:10px;margin-bottom:18px}
   .si{width:38px;height:38px;font-size:18px;border-radius:10px}
-  .st{font-size:18px}
+  .st{font-size:19px}
   .ss{font-size:11px}
   .grid{gap:16px}
   .card{border-radius:12px}
@@ -157,7 +158,7 @@ footer{text-align:center;padding:36px 24px;color:var(--muted);font-size:12px;bor
   .anim-wrap::after{font-size:9px;left:8px;bottom:8px;padding:2px 7px}
   .wb,.mb{font-size:9px;padding:2px 7px;border-radius:8px}
   .cb{padding:15px}
-  .cn{font-size:16px}
+  .cn{font-size:17px}
   .ce{font-size:11px;margin-bottom:10px}
   .chips{gap:5px;margin-bottom:12px}
   .chip{font-size:10px;padding:2px 7px}
