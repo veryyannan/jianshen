@@ -187,13 +187,14 @@ footer{text-align:center;padding:36px 24px;color:var(--muted);font-size:12px;bor
   body.follow-fullscreen .rep-count{font-size:34px}
   footer{padding:28px 16px}
 }
-body.follow-fullscreen.immersive-coach{background:#05070a}
-body.follow-fullscreen.immersive-coach .coach{position:relative;isolation:isolate;background:#05070a}
-body.follow-fullscreen.immersive-coach .coach::before{content:"";position:absolute;inset:-22px;z-index:0;background-image:var(--coach-bg);background-size:cover;background-position:center;filter:blur(22px) saturate(1.08);opacity:.42;transform:scale(1.05)}
+html.immersive-root,html:has(body.follow-fullscreen.immersive-coach),body.follow-fullscreen.immersive-coach{width:100%;height:100%;margin:0;overflow:hidden;background:#05070a}
+body.follow-fullscreen.immersive-coach::before{display:none}
+body.follow-fullscreen.immersive-coach .coach{position:fixed;inset:0;width:100vw;height:100svh;isolation:isolate;background:#05070a}
+body.follow-fullscreen.immersive-coach .coach::before{content:"";position:absolute;inset:-40px;z-index:0;background-image:var(--coach-bg);background-size:cover;background-position:center;filter:blur(24px) saturate(1.08);opacity:.74;transform:scale(1.09)}
 body.follow-fullscreen.immersive-coach .coach::after{content:"";position:absolute;inset:0;z-index:1;background:radial-gradient(circle at 52% 45%,rgba(255,255,255,.06),transparent 42%),linear-gradient(90deg,rgba(5,7,10,.72),rgba(5,7,10,.08) 28%,rgba(5,7,10,.08) 68%,rgba(5,7,10,.68)),linear-gradient(180deg,rgba(5,7,10,.5),transparent 24%,rgba(5,7,10,.72))}
-body.follow-fullscreen.immersive-coach .coach-main{position:relative;z-index:2;height:100svh;padding:0;display:block;overflow:hidden}
+body.follow-fullscreen.immersive-coach .coach-main{position:relative;z-index:2;width:100vw;height:100svh;padding:0;display:block;overflow:hidden}
 body.follow-fullscreen.immersive-coach .coach-player{position:absolute;inset:0;z-index:1;margin:0;border:0;border-radius:0;background:transparent}
-body.follow-fullscreen.immersive-coach .coach-player img{width:100%;height:100%;aspect-ratio:auto;object-fit:contain;background:transparent;filter:contrast(1.04) saturate(1.02)}
+body.follow-fullscreen.immersive-coach .coach-player img{width:100%;height:100%;aspect-ratio:auto;object-fit:cover;object-position:center;background:transparent;filter:contrast(1.04) saturate(1.02)}
 body.follow-fullscreen.immersive-coach .coach-stage{position:absolute;z-index:4;left:max(16px,env(safe-area-inset-left));top:max(14px,env(safe-area-inset-top));width:min(34vw,330px);margin:0;padding:10px 12px;display:grid;grid-template-columns:1fr auto;align-items:center;gap:12px;background:rgba(7,10,16,.46);border:1px solid rgba(255,255,255,.1);border-radius:13px;box-shadow:0 14px 34px rgba(0,0,0,.3);backdrop-filter:blur(12px)}
 body.follow-fullscreen.immersive-coach .coach-kicker{display:none}
 body.follow-fullscreen.immersive-coach .coach-title{font-size:clamp(15px,2vw,21px);line-height:1.12;text-shadow:0 2px 14px rgba(0,0,0,.58);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -903,6 +904,7 @@ function revealCoachControls(){
 }
 async function toggleFollowFullscreen(){
   const entering=!document.body.classList.contains('follow-fullscreen');
+  document.documentElement.classList.toggle('immersive-root',entering);
   document.body.classList.toggle('follow-fullscreen',entering);
   document.body.classList.toggle('immersive-coach',entering);
   document.body.classList.toggle('controls-visible',entering);
@@ -931,6 +933,7 @@ document.addEventListener('DOMContentLoaded',()=>{
   document.addEventListener('fullscreenchange',()=>{
     if(!document.fullscreenElement&&document.body.classList.contains('follow-fullscreen')){
       const btn=document.getElementById('coachFullscreen');
+      document.documentElement.classList.remove('immersive-root');
       document.body.classList.remove('follow-fullscreen','immersive-coach','controls-visible');
       if(btn){btn.textContent='跟练全屏';btn.classList.remove('fullscreen-on')}
     }
