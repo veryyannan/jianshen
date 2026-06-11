@@ -194,37 +194,33 @@ body.follow-fullscreen.immersive-coach .coach::after{content:"";position:absolut
 body.follow-fullscreen.immersive-coach .coach-main{position:relative;z-index:2;height:100svh;padding:0;display:block;overflow:hidden}
 body.follow-fullscreen.immersive-coach .coach-player{position:absolute;inset:0;z-index:1;margin:0;border:0;border-radius:0;background:transparent}
 body.follow-fullscreen.immersive-coach .coach-player img{width:100%;height:100%;aspect-ratio:auto;object-fit:contain;background:transparent;filter:contrast(1.04) saturate(1.02)}
-body.follow-fullscreen.immersive-coach .coach-stage{position:absolute;z-index:4;left:max(18px,env(safe-area-inset-left));top:max(14px,env(safe-area-inset-top));width:min(46vw,450px);margin:0;padding:12px 14px;display:grid;grid-template-columns:1fr auto;align-items:start;gap:14px;background:rgba(7,10,16,.54);border:1px solid rgba(255,255,255,.11);border-radius:14px;box-shadow:0 18px 42px rgba(0,0,0,.34);backdrop-filter:blur(14px)}
-body.follow-fullscreen.immersive-coach .coach-kicker{font-size:11px;color:rgba(245,247,250,.72)}
-body.follow-fullscreen.immersive-coach .coach-title{font-size:clamp(22px,3.2vw,36px);line-height:1.08;text-shadow:0 2px 18px rgba(0,0,0,.62)}
-body.follow-fullscreen.immersive-coach .coach-meta{font-size:12px;color:rgba(232,236,245,.72);margin-top:6px}
-body.follow-fullscreen.immersive-coach .timer{min-width:0;text-align:right;font-size:clamp(42px,11vh,96px);line-height:.92;text-shadow:0 12px 36px rgba(232,133,74,.28)}
-body.follow-fullscreen.immersive-coach .rep-panel{z-index:5;right:max(20px,env(safe-area-inset-right));bottom:max(24px,env(safe-area-inset-bottom));min-width:min(30vw,260px);padding:16px 22px;border-radius:18px;background:rgba(7,10,16,.7);border:1px solid rgba(255,255,255,.14);box-shadow:0 20px 56px rgba(0,0,0,.48);backdrop-filter:blur(16px)}
+body.follow-fullscreen.immersive-coach .coach-stage{position:absolute;z-index:4;left:max(16px,env(safe-area-inset-left));top:max(14px,env(safe-area-inset-top));width:min(34vw,330px);margin:0;padding:10px 12px;display:grid;grid-template-columns:1fr auto;align-items:center;gap:12px;background:rgba(7,10,16,.46);border:1px solid rgba(255,255,255,.1);border-radius:13px;box-shadow:0 14px 34px rgba(0,0,0,.3);backdrop-filter:blur(12px)}
+body.follow-fullscreen.immersive-coach .coach-kicker{display:none}
+body.follow-fullscreen.immersive-coach .coach-title{font-size:clamp(15px,2vw,21px);line-height:1.12;text-shadow:0 2px 14px rgba(0,0,0,.58);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+body.follow-fullscreen.immersive-coach .coach-meta{font-size:10px;color:rgba(232,236,245,.62);margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+body.follow-fullscreen.immersive-coach .timer{min-width:0;text-align:right;font-size:clamp(38px,9vh,68px);line-height:.92;text-shadow:0 10px 28px rgba(232,133,74,.24)}
+body.follow-fullscreen.immersive-coach .rep-panel{display:none}
 body.follow-fullscreen.immersive-coach .rep-label{font-size:12px;color:rgba(232,236,245,.68)}
 body.follow-fullscreen.immersive-coach .rep-count{font-size:clamp(52px,15vh,118px);line-height:.95}
 body.follow-fullscreen.immersive-coach .rep-hint{font-size:12px;color:rgba(232,236,245,.62)}
 body.follow-fullscreen.immersive-coach .coach-progress{position:absolute;z-index:5;left:0;right:0;bottom:0;height:6px;margin:0;border:0;border-radius:0;background:rgba(255,255,255,.14)}
-body.follow-fullscreen.immersive-coach .coach-next{position:absolute;z-index:4;left:max(18px,env(safe-area-inset-left));bottom:max(22px,env(safe-area-inset-bottom));max-width:44vw;margin:0;padding:10px 13px;border-radius:12px;background:rgba(7,10,16,.5);border:1px solid rgba(255,255,255,.1);color:rgba(232,236,245,.78);backdrop-filter:blur(12px)}
+body.follow-fullscreen.immersive-coach .coach-next{display:none}
 body.follow-fullscreen.immersive-coach .coach-actions{position:absolute;z-index:6;right:max(18px,env(safe-area-inset-right));top:max(14px,env(safe-area-inset-top));width:min(34vw,360px);display:flex;justify-content:flex-end;gap:8px;opacity:.16;transition:opacity .22s ease}
 body.follow-fullscreen.immersive-coach.controls-visible .coach-actions,body.follow-fullscreen.immersive-coach .coach-actions:hover{opacity:1}
 body.follow-fullscreen.immersive-coach .coach-btn{flex:0 1 auto;min-width:0;padding:9px 11px;border-radius:999px;background:rgba(7,10,16,.62);border-color:rgba(255,255,255,.14);box-shadow:0 10px 30px rgba(0,0,0,.28);backdrop-filter:blur(12px)}
 @media(orientation:landscape) and (max-height:700px){
   body.follow-fullscreen.immersive-coach .coach-main{display:block;padding:0}
-  body.follow-fullscreen.immersive-coach .coach-stage{width:min(42vw,420px);padding:10px 12px}
-  body.follow-fullscreen.immersive-coach .coach-title{font-size:clamp(20px,3vw,32px)}
-  body.follow-fullscreen.immersive-coach .coach-meta{font-size:11px}
-  body.follow-fullscreen.immersive-coach .timer{font-size:clamp(40px,12vh,78px)}
-  body.follow-fullscreen.immersive-coach .rep-panel{min-width:min(28vw,240px);padding:14px 20px}
+  body.follow-fullscreen.immersive-coach .coach-stage{width:min(32vw,310px);padding:9px 11px}
+  body.follow-fullscreen.immersive-coach .coach-title{font-size:clamp(14px,2vw,20px)}
+  body.follow-fullscreen.immersive-coach .coach-meta{font-size:10px}
+  body.follow-fullscreen.immersive-coach .timer{font-size:clamp(36px,10vh,62px)}
   body.follow-fullscreen.immersive-coach .rep-count{font-size:clamp(48px,15vh,98px)}
-  body.follow-fullscreen.immersive-coach .coach-next{max-width:42vw;font-size:12px}
 }
 @media(max-width:600px){
-  body.follow-fullscreen.immersive-coach .coach-stage{left:10px;right:10px;top:10px;width:auto}
-  body.follow-fullscreen.immersive-coach .coach-title{font-size:22px}
-  body.follow-fullscreen.immersive-coach .timer{font-size:46px}
-  body.follow-fullscreen.immersive-coach .rep-panel{right:10px;bottom:18px;min-width:148px;padding:11px 13px;border-radius:14px}
+  body.follow-fullscreen.immersive-coach .coach-stage{left:10px;right:auto;top:10px;width:min(76vw,320px)}
+  body.follow-fullscreen.immersive-coach .coach-title{font-size:16px}
+  body.follow-fullscreen.immersive-coach .timer{font-size:42px}
   body.follow-fullscreen.immersive-coach .rep-count{font-size:40px}
-  body.follow-fullscreen.immersive-coach .coach-next{left:10px;bottom:18px;max-width:48vw;font-size:11px}
   body.follow-fullscreen.immersive-coach .coach-actions{left:10px;right:10px;top:auto;bottom:76px;width:auto;justify-content:center;opacity:.2}
 }
 </style>
