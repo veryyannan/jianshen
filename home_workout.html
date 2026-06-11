@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>家庭壶铃训练计划</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap');
+:root{--bg:#0d0f14;--surface:#161a22;--card:#1c2130;--border:#2a3045;--accent:#e8854a;--accent2:#4a9ee8;--gold:#c9a84c;--text:#e8eaf0;--muted:#7a8099;--green:#4ac97a;--r:16px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:'Noto Sans SC',sans-serif;font-size:15px;line-height:1.7}
+nav{position:sticky;top:0;z-index:100;background:rgba(13,15,20,.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 20px;display:flex;align-items:center;gap:6px;overflow-x:auto;scrollbar-width:none;height:54px}
+nav::-webkit-scrollbar{display:none}
+.logo{font-size:16px;font-weight:900;color:var(--accent);white-space:nowrap;margin-right:12px}
+.nb{background:none;border:1px solid var(--border);color:var(--muted);padding:5px 12px;border-radius:20px;cursor:pointer;font-size:12px;white-space:nowrap;transition:all .2s;font-family:inherit}
+.nb:hover,.nb.on{background:var(--accent);border-color:var(--accent);color:#fff}
+.hero{padding:70px 24px 50px;text-align:center;max-width:680px;margin:0 auto}
+.htag{display:inline-block;background:rgba(232,133,74,.12);border:1px solid rgba(232,133,74,.3);color:var(--accent);font-size:11px;font-weight:700;letter-spacing:2px;padding:4px 14px;border-radius:20px;margin-bottom:20px;text-transform:uppercase}
+.hero h1{font-size:clamp(28px,5vw,50px);font-weight:900;line-height:1.1;letter-spacing:-1px;margin-bottom:16px}
+.hero h1 span{color:var(--accent)}
+.hero p{color:var(--muted);font-size:15px;margin-bottom:30px}
+.stats{display:flex;justify-content:center;gap:40px;flex-wrap:wrap}
+.stat-n{font-size:26px;font-weight:900;color:var(--accent)}
+.stat-l{font-size:11px;color:var(--muted)}
+.sec{max-width:1180px;margin:0 auto;padding:36px 20px}
+.sh{display:flex;align-items:center;gap:14px;margin-bottom:28px}
+.si{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.st{font-size:20px;font-weight:900}
+.ss{font-size:12px;color:var(--muted);margin-top:2px}
+.grid{display:flex;flex-direction:column;gap:22px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;display:grid;grid-template-columns:minmax(0,1.55fr) minmax(280px,.72fr);align-items:stretch;transition:border-color .2s,box-shadow .2s}
+.card:hover{border-color:var(--accent);box-shadow:0 14px 36px rgba(0,0,0,.22)}
+.anim-wrap{position:relative;min-height:330px;background:#0f141d;overflow:hidden;cursor:pointer;border-right:1px solid var(--border)}
+.anim-wrap canvas{display:none}
+.anim-img{display:block;width:100%;height:100%;min-height:330px;object-fit:contain;object-position:center;background:#0f141d}
+.frame-focus{position:absolute;top:8px;bottom:8px;left:8px;width:calc(25% - 12px);border:2px solid rgba(74,201,122,.9);box-shadow:0 0 0 999px rgba(0,0,0,.16),0 0 18px rgba(74,201,122,.45);border-radius:10px;pointer-events:none;animation:frameFocus 5.2s steps(4,end) infinite}
+.anim-wrap.paused .frame-focus{animation-play-state:paused;border-color:rgba(232,133,74,.95);box-shadow:0 0 0 999px rgba(0,0,0,.12),0 0 18px rgba(232,133,74,.45)}
+.anim-wrap::after{content:'真人分解图';position:absolute;left:10px;bottom:10px;background:rgba(0,0,0,.62);border:1px solid rgba(255,255,255,.14);color:rgba(255,255,255,.72);font-size:10px;padding:3px 8px;border-radius:8px;pointer-events:none}
+@keyframes frameFocus{0%{left:8px}25%{left:calc(25% + 4px)}50%{left:calc(50% + 0px)}75%,100%{left:calc(75% - 4px)}}
+.play-hint{position:absolute;bottom:10px;right:10px;background:rgba(0,0,0,.6);border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.6);font-size:10px;padding:3px 8px;border-radius:8px;pointer-events:none}
+.wb{position:absolute;top:10px;right:10px;background:rgba(232,133,74,.15);border:1px solid rgba(232,133,74,.4);color:var(--accent);font-size:10px;font-weight:700;padding:3px 9px;border-radius:10px}
+.mb{position:absolute;top:10px;left:10px;background:rgba(74,158,232,.12);border:1px solid rgba(74,158,232,.35);color:var(--accent2);font-size:10px;padding:3px 9px;border-radius:10px}
+.cb{padding:22px;display:flex;flex-direction:column;justify-content:center;min-width:0}
+.cn{font-size:19px;font-weight:800;margin-bottom:3px;line-height:1.25}
+.ce{font-size:12px;color:var(--muted);margin-bottom:14px}
+.chips{display:flex;gap:7px;margin-bottom:16px;flex-wrap:wrap}
+.chip{background:rgba(232,133,74,.1);border:1px solid rgba(232,133,74,.22);color:var(--accent);font-size:11px;font-weight:600;padding:3px 9px;border-radius:7px}
+.exbtn{width:100%;background:rgba(255,255,255,.04);border:1px solid var(--border);color:var(--text);padding:11px;border-radius:9px;cursor:pointer;font-size:12px;font-family:inherit;transition:background .2s;text-align:center}
+.exbtn:hover{background:rgba(255,255,255,.08)}
+.dp{display:none;margin-top:14px;border-top:1px solid var(--border);padding-top:14px;max-height:420px;overflow:auto;padding-right:4px}
+.dp.open{display:block}
+.dl{font-size:10px;font-weight:700;letter-spacing:1px;color:var(--accent);text-transform:uppercase;margin:10px 0 6px}
+.sl{list-style:none;counter-reset:s}
+.sl li{counter-increment:s;display:flex;gap:8px;font-size:12px;color:var(--muted);margin-bottom:5px;line-height:1.5}
+.sl li::before{content:counter(s);background:var(--accent);color:#fff;font-size:9px;font-weight:700;min-width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+.tl{list-style:none}
+.tl li{font-size:12px;color:var(--muted);padding:4px 0 4px 14px;position:relative;border-bottom:1px solid rgba(255,255,255,.02)}
+.tl li::before{content:'⚡';position:absolute;left:0;font-size:10px}
+.wl li::before{content:'⚠️'}
+.div{height:1px;background:var(--border);max-width:1100px;margin:0 auto}
+.sched{display:grid;grid-template-columns:repeat(7,1fr);gap:8px}
+.dc{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px 8px;text-align:center}
+.dc.on{border-color:var(--accent);background:rgba(232,133,74,.07)}
+.dc.rest{opacity:.45}
+.dn{font-size:10px;color:var(--muted);margin-bottom:4px}
+.di{font-size:20px;margin-bottom:4px}
+.df{font-size:10px;font-weight:600}
+.tgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:18px}
+.tbox{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px}
+.tbl{font-size:11px;font-weight:700;letter-spacing:1px;margin-bottom:8px}
+.tcon{font-size:12px;color:var(--muted);line-height:2}
+.tips-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px}
+.tc{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:18px}
+.tci{font-size:26px;margin-bottom:8px}
+.tct{font-size:14px;font-weight:700;margin-bottom:5px}
+.tcd{font-size:12px;color:var(--muted)}
+.kalert{background:rgba(201,168,76,.07);border:1px solid rgba(201,168,76,.2);border-radius:10px;padding:16px;margin-top:16px}
+.follow-sec{padding-top:20px}
+.coach{background:linear-gradient(135deg,rgba(28,33,48,.98),rgba(20,25,36,.98));border:1px solid var(--border);border-radius:var(--r);display:grid;grid-template-columns:minmax(0,1fr) 330px;gap:0;overflow:hidden;box-shadow:0 18px 44px rgba(0,0,0,.24)}
+.coach-main{padding:22px}
+.plan-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.plan-tab{background:rgba(255,255,255,.04);border:1px solid var(--border);color:var(--muted);font-family:inherit;font-size:12px;padding:8px 12px;border-radius:9px;cursor:pointer}
+.plan-tab.active{background:rgba(232,133,74,.14);border-color:rgba(232,133,74,.55);color:var(--accent)}
+.coach-stage{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:16px}
+.coach-kicker{font-size:12px;font-weight:800;color:var(--green);letter-spacing:1px;margin-bottom:4px}
+.coach-title{font-size:28px;font-weight:900;line-height:1.15}
+.coach-meta{font-size:12px;color:var(--muted);margin-top:7px}
+.timer{font-size:56px;font-weight:900;font-variant-numeric:tabular-nums;color:var(--accent);line-height:1;min-width:170px;text-align:right}
+.coach-progress{height:10px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);border-radius:999px;overflow:hidden;margin-bottom:12px}
+.coach-progress div{height:100%;width:0;background:linear-gradient(90deg,var(--green),var(--accent));transition:width .25s linear}
+.coach-next{font-size:12px;color:var(--muted);margin-bottom:18px}
+.coach-actions{display:flex;gap:10px;flex-wrap:wrap}
+.coach-btn{background:rgba(255,255,255,.05);border:1px solid var(--border);color:var(--text);font-family:inherit;font-size:13px;font-weight:700;padding:10px 16px;border-radius:10px;cursor:pointer}
+.coach-btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.coach-btn.voice-on{border-color:rgba(74,201,122,.5);color:var(--green)}
+.coach-list{border-left:1px solid var(--border);background:rgba(0,0,0,.13);max-height:330px;overflow:auto;padding:12px}
+.coach-item{display:grid;grid-template-columns:26px 1fr auto;gap:9px;align-items:center;padding:9px;border-radius:10px;color:var(--muted);font-size:12px}
+.coach-item.active{background:rgba(74,201,122,.11);color:var(--text)}
+.coach-item.done{opacity:.5}
+.coach-num{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.06);font-size:11px;font-weight:800}
+.coach-item.active .coach-num{background:var(--green);color:#07110b}
+.coach-small{font-size:10px;color:var(--muted)}
+.card.coach-current{border-color:var(--green);box-shadow:0 0 0 2px rgba(74,201,122,.28),0 18px 40px rgba(0,0,0,.28)}
+footer{text-align:center;padding:36px 24px;color:var(--muted);font-size:12px;border-top:1px solid var(--border)}
+@media(max-width:900px){.card{grid-template-columns:1fr}.anim-wrap{border-right:0;border-bottom:1px solid var(--border);min-height:260px}.anim-img{min-height:260px}.cb{padding:18px}.cn{font-size:17px}.grid{gap:18px}.dp{max-height:none}.coach{grid-template-columns:1fr}.coach-list{border-left:0;border-top:1px solid var(--border);max-height:240px}.timer{text-align:left;min-width:auto}.coach-stage{align-items:flex-start;flex-direction:column}.coach-title{font-size:24px}}
+@media(max-width:600px){
+  nav{height:50px;padding:0 12px;gap:5px}
+  .logo{font-size:14px;margin-right:6px}
+  .nb{font-size:11px;padding:4px 10px}
+  .hero{padding:44px 16px 34px}
+  .hero h1{font-size:30px;letter-spacing:0}
+  .hero p{font-size:13px;margin-bottom:22px}
+  .stats{gap:22px}
+  .stat-n{font-size:22px}
+  .sec{padding:28px 12px}
+  .sh{gap:10px;margin-bottom:18px}
+  .si{width:38px;height:38px;font-size:18px;border-radius:10px}
+  .st{font-size:18px}
+  .ss{font-size:11px}
+  .grid{gap:16px}
+  .card{border-radius:12px}
+  .anim-wrap{min-height:0;height:auto;aspect-ratio:16/9}
+  .anim-img{min-height:0;height:100%;object-fit:contain}
+  .frame-focus{top:5px;bottom:5px;border-radius:8px;width:calc(25% - 10px)}
+  .play-hint{font-size:9px;right:8px;bottom:8px;padding:2px 7px}
+  .anim-wrap::after{font-size:9px;left:8px;bottom:8px;padding:2px 7px}
+  .wb,.mb{font-size:9px;padding:2px 7px;border-radius:8px}
+  .cb{padding:15px}
+  .cn{font-size:16px}
+  .ce{font-size:11px;margin-bottom:10px}
+  .chips{gap:5px;margin-bottom:12px}
+  .chip{font-size:10px;padding:2px 7px}
+  .exbtn{padding:10px;font-size:12px}
+  .dl{font-size:10px;margin:9px 0 5px}
+  .sl li,.tl li{font-size:11px;line-height:1.55}
+  .tgrid{grid-template-columns:1fr}
+  .sched{grid-template-columns:repeat(4,1fr)}
+  .dc{padding:10px 6px}
+  footer{padding:28px 16px}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">💪 壶铃计划</div>
+  <button class="nb" onclick="goTo('follow',this)">跟练模式</button>
+  <button class="nb on" onclick="goTo('force',this)">力量爆发</button>
+  <button class="nb" onclick="goTo('upper',this)">上肢核心</button>
+  <button class="nb" onclick="goTo('special',this)">功能专项</button>
+  <button class="nb" onclick="goTo('plank',this)">平板支撑</button>
+  <button class="nb" onclick="goTo('kegel',this)">凯格尔</button>
+  <button class="nb" onclick="goTo('schedule',this)">训练计划</button>
+</nav>
+
+<div class="hero">
+  <div class="htag">家庭训练 · 全面提升</div>
+  <h1>用 <span>2.5kg + 10kg</span><br>壶铃，重塑自己</h1>
+  <p>力量、耐力、功能性全面提升，科学系统的家庭训练方案</p>
+  <div class="stats">
+    <div><div class="stat-n">14</div><div class="stat-l">个训练动作</div></div>
+    <div><div class="stat-n">3</div><div class="stat-l">天 / 周</div></div>
+    <div><div class="stat-n">8</div><div class="stat-l">周见效</div></div>
+  </div>
+</div>
+
+<!-- FOLLOW WORKOUT -->
+<div class="sec follow-sec" id="follow">
+  <div class="sh">
+    <div class="si" style="background:rgba(74,201,122,.13)">⏱️</div>
+    <div><div class="st">跟练模式</div><div class="ss">选择训练日，自动串联动作、组数和休息</div></div>
+  </div>
+  <div class="coach">
+    <div class="coach-main">
+      <div class="plan-tabs" role="tablist" aria-label="训练日选择">
+        <button class="plan-tab active" type="button" data-plan="monday">周一 · 下肢爆发</button>
+        <button class="plan-tab" type="button" data-plan="wednesday">周三 · 上肢核心</button>
+        <button class="plan-tab" type="button" data-plan="friday">周五 · 全身循环</button>
+      </div>
+      <div class="coach-stage">
+        <div>
+          <div class="coach-kicker" id="coachState">准备开始</div>
+          <div class="coach-title" id="coachTitle">周一 · 下肢爆发</div>
+          <div class="coach-meta" id="coachMeta">第 1 个动作 · 第 1/3 组</div>
+        </div>
+        <div class="timer" id="coachTimer">00:40</div>
+      </div>
+      <div class="coach-progress"><div id="coachBar"></div></div>
+      <div class="coach-next" id="coachNext">下一个：壶铃深蹲</div>
+      <div class="coach-actions">
+        <button class="coach-btn primary" type="button" id="coachStart">开始</button>
+        <button class="coach-btn" type="button" id="coachNextBtn">下一步</button>
+        <button class="coach-btn" type="button" id="coachReset">重置</button>
+        <button class="coach-btn voice-on" type="button" id="coachVoice">语音 开</button>
+      </div>
+    </div>
+    <div class="coach-list" id="coachList"></div>
+  </div>
+</div>
+<div class="div"></div>
+
+<!-- SECTION 1 -->
+<div class="sec" id="force">
+  <div class="sh">
+    <div class="si" style="background:rgba(232,133,74,.13)">🏋️</div>
+    <div><div class="st">力量 & 爆发力</div><div class="ss">大肌群训练 · 直接促进睾酮分泌</div></div>
+  </div>
+  <div class="grid">
+
+    <div class="card">
+      <div class="anim-wrap" onclick="toggleAnim(this)">
+        <img class="anim-img" id="c_swing" src="home_workout_assets/kettlebell-swing.png" alt="壶铃摇摆真人四帧分解图" loading="lazy">
+        <div class="frame-focus" aria-hidden="true"></div>
+        <div class="wb">10kg</div><div class="mb">臀部·核心·腘绳肌</div>
+        <div class="play-hint">点击 暂停/播放</div>
+      </div>
+      <div class="cb">
+        <div class="cn">壶铃摇摆</div><div class="ce">Kettlebell Swing</div>
+        <div class="chips"><span class="chip">3组</span><span class="chip">15-20次/组</span><span class="chip">组间60s</span></div>
+        <button class="exbtn" onclick="toggleDetail(this)">查看详细步骤 ▾</button>
+        <div class="dp">
+          <div class="dl">动作步骤</div>
+          <ol class="sl">
+            <li>双脚与肩同宽，脚尖微外展15°，双手握壶铃把手</li>
+            <li>髋关节向后推（铰链），膝盖微弯，壶铃在两腿间向后摆</li>
+            <li>爆发式挺髋收臀，让壶铃顺势向前摆至肩膀高度</li>
+            <li>顶部身体完全伸展：臀、膝、肩成一条直线</li>
+            <li>壶铃下落时顺势屈髋蓄力，保持背部平直，循环重复</li>
+          </ol>
+          <div class="dl">动作标准</div>
+          <ul class="tl">
+            <li>发力点是臀部爆发，手臂只是引导方向，不主动上抬</li>
+            <li>脊柱全程中立，不弓背塌腰</li>
+            <li>壶铃摆至肩膀高度即可，不要过头</li>
+            <li>膝盖不要过度前移，动作是铰链而非深蹲</li>
+          </ul>
+          <div class="dl">常见错误</div>
+          <ul class="tl wl">
+            <li>用深蹲替代铰链（膝盖前推而非髋后推）</li>
+            <li>用手臂力量上抬壶铃，忽略臀部爆发</li>
+            <li>弓腰圆背，脊柱受伤风险极高</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="anim-wrap" onclick="toggleAnim(this)">
+        <img class="anim-img" id="c_squat" src="home_workout_assets/goblet-squat.png" alt="壶铃深蹲真人四帧分解图" loading="lazy">
+        <div class="frame-focus" aria-hidden="true"></div>
+        <div class="wb">10kg</div><div class="mb">股四头肌·臀部·核心</div>
+        <div class="play-hint">点击 暂停/播放</div>
+      </div>
+      <div class="cb">
+        <div class="cn">壶铃深蹲</div><div class="ce">Goblet Squat</div>
+        <div class="chips"><span class="chip">3组</span><span class="chip">12-15次/组</span><span class="chip">组间60s</span></div>
+        <button class="exbtn" onclick="toggleDetail(this)">查看详细步骤 ▾</button>
+        <div class="dp">
+          <div class="dl">动作步骤</div>
+          <ol class="sl">
+            <li>双手捧壶铃底部，置于胸前锁骨下方（杯式握法）</li>
+            <li>双脚与肩同宽或略宽，脚尖外展30-45°</li>
+            <li>吸气收腹，屈髋屈膝下蹲，膝盖沿脚尖方向推出</li>
+            <li>下蹲至大腿平行或低于地面，肘部可轻碰膝盖内侧辅助打开</li>
+            <li>呼气蹬地站起，顶部收紧臀部</li>
+          </ol>
+          <div class="dl">动作标准</div>
+          <ul class="tl">
+            <li>胸部全程挺起，壶铃贴近身体，不要前倾</li>
+            <li>脚跟全程踩实，重心均匀分布</li>
+            <li>膝盖不要内扣，与脚尖方向一致</li>
+            <li>深蹲至大腿平行或更低才算完整动作</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="anim-wrap" onclick="toggleAnim(this)">
+        <img class="anim-img" id="c_rdl" src="home_workout_assets/single-leg-rdl.png" alt="单腿罗马尼亚硬拉真人四帧分解图" loading="lazy">
+        <div class="frame-focus" aria-hidden="true"></div>
+        <div class="wb">10kg</div><div class="mb">臀部·腘绳肌·平衡</div>
+        <div class="play-hint">点击 暂停/播放</div>
+      </div>
+      <div class="cb">
+        <div class="cn">单腿罗马尼亚硬拉</div><div class="ce">Single-leg RDL</div>
+        <div class="chips"><span class="chip">3组</span><span class="chip">10次/每腿</span><span class="chip">组间75s</span></div>
+        <button class="exbtn" onclick="toggleDetail(this)">查看详细步骤 ▾</button>
+        <div class="dp">
+          <div class="dl">动作步骤</div>
+          <ol class="sl">
+            <li>单手握壶铃（与支撑腿对侧），站立腿微弯，核心收紧</li>
+            <li>上身前倾同时后腿向后抬起，保持后腿与躯干一条直线</li>
+            <li>壶铃沿支撑腿滑下，感受腘绳肌强烈拉伸</li>
+            <li>下放至感觉腘绳肌充分拉伸（约与地面平行）</li>
+            <li>以臀部发力将身体拉回直立，左右腿交替完成</li>
+          </ol>
+          <div class="dl">动作标准</div>
+          <ul class="tl">
+            <li>后腿、骨盆、上身保持同一平面，骨盆不要旋转</li>
+            <li>支撑腿脚尖朝前，不要外翻</li>
+            <li>颈椎与脊柱中立，眼看地面斜前方</li>
+          </ul>
+          <div class="dl">初学提示</div>
+          <ul class="tl">
+            <li>初期手扶墙壁或椅背辅助平衡</li>
+            <li>先徒手练好姿势再加壶铃</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+<div class="div"></div>
+
+<!-- SECTION 2 -->
+<div class="sec" id="upper">
+  <div class="sh">
+    <div class="si" style="background:rgba(74,158,232,.13)">💪</div>
+    <div><div class="st">上肢 & 核心</div><div class="ss">肩背手臂全面发展</div></div>
+  </div>
+  <div class="grid">
+
+    <div class="card">
+      <div class="anim-wrap" onclick="toggleAnim(this)">
+        <img class="anim-img" id="c_press" src="home_workout_assets/overhead-press.png" alt="壶铃单臂推举真人四帧分解图" loading="lazy">
+        <div class="frame-focus" aria-hidden="true"></div>
+        <div class="wb">10kg</div><div class="mb">肩部·三头肌·核心</div>
+        <div class="play-hint">点击 暂停/播放</div>
+      </div>
+      <div class="cb">
+        <div class="cn">壶铃单臂推举</div><div class="ce">Single-arm Overhead Press</div>
+        <div class="chips"><span class="chip">3组</span><span class="chip">8-10次/每侧</span><span class="chip">组间60s</span></div>
+        <button class="exbtn" onclick="toggleDetail(this)">查看详细步骤 ▾</button>
+        <div class="dp">
+          <div class="dl">动作步骤</div>
+          <ol class="sl">
+            <li>站立，单手将壶铃置于肩膀高度架式位（壶铃靠前臂，肘指前方）</li>
+            <li>双脚与肩同宽，收紧核心和臀部，保持身体稳定</li>
+            <li>呼气，将壶铃竖直向上推至头顶，手臂伸直锁定</li>
+            <li>顶部停顿1秒，感受肩部收缩</li>
+            <li>吸气，缓慢控制壶铃回到肩膀位置，重复</li>
+          </ol>
+          <div class="dl">动作标准</div>
+          <ul class="tl">
+            <li>推举路径垂直，不要偏向身体任何一侧</li>
+            <li>腰部保持中立，不要过度后仰代偿</li>
+            <li>非推举侧手叉腰，保持整体平衡</li>
+            <li>不要用腿部借力（除非做推举变式）</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="anim-wrap" onclick="toggleAnim(this)">
+        <img class="anim-img" id="c_row" src="home_workout_assets/bent-over-row.png" alt="壶铃单臂划船真人四帧分解图" loading="lazy">
+        <div class="frame-focus" aria-hidden="true"></div>
+        <div class="wb">10kg</div><div class="mb">背阔肌·菱形肌·二头</div>
+        <div class="play-hint">点击 暂停/播放</div>
+      </div>
+      <div class="cb">
+        <div class="cn">壶铃单臂划船</div><div class="ce">Single-arm Bent-over Row</div>
+        <div class="chips"><span class="chip">3组</span><span class="chip">10-12次/每侧</span><span class="chip">组间60s</span></div>
+        <button class="exbtn" onclick="toggleDetail(this)">查看详细步骤 ▾</button>
+        <div class="dp">
+          <div class="dl">动作步骤</div>
+          <ol class="sl">
+            <li>一手扶凳子或膝盖，对侧手握壶铃自然下垂</li>
+            <li>上身与地面约45°，脊柱保持中立，不弓背</li>
+            <li>吸气，以背部肌肉发力，将壶铃向腰侧拉起</li>
+            <li>肘部向后向上，壶铃拉至腰部，感受背部收缩</li>
+            <li>呼气，缓慢放下壶铃，充分伸展背阔肌，重复</li>
+          </ol>
+          <div class="dl">动作标准</div>
+          <ul class="tl">
+            <li>用背部拉，想象用肘部带动壶铃，而非二头肌</li>
+            <li>身体不随壶铃旋转，躯干保持稳定</li>
+            <li>肘部贴近身体，不要外展</li>
+            <li>下放时2-3秒慢速控制，充分拉伸</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="anim-wrap" onclick="toggleAnim(this)">
+        <img class="anim-img" id="c_twist" src="home_workout_assets/russian-twist.png" alt="壶铃俄罗斯扭转真人四帧分解图" loading="lazy">
+        <div class="frame-focus" aria-hidden="true"></div>
+        <div class="wb">2.5kg</div><div class="mb">腹斜肌·核心抗旋·髋屈肌</div>
+        <div class="play-hint">点击 暂停/播放</div>
+      </div>
+      <div class="cb">
+        <div class="cn">壶铃俄罗斯扭转</div><div class="ce">Kettlebell Russian Twist</div>
+        <div class="chips"><span class="chip">3组</span><span class="chip">12-16次/每侧</span><span class="chip">控制节奏</span></div>
+        <button class="exbtn" onclick="toggleDetail(this)">查看详细步骤 ▾</button>
+        <div class="dp">
+          <div class="dl">动作步骤</div>
+          <ol class="sl">
+            <li>坐在地面，屈膝，脚跟轻触地面，双手握住小壶铃</li>
+            <li>胸口打开，身体微微后倾，核心收紧，保持脊柱中立</li>
+            <li>带动胸腔和肩膀向一侧旋转，壶铃跟随身体移动</li>
+            <li>回到中间后转向另一侧，左右交替完成</li>
+            <li>全程缓慢控制，不要用手臂甩动壶铃</li>
+          </ol>
+          <div class="dl">动作标准</div>
+          <ul class="tl">
+            <li>旋转来自躯干，不是单纯左右摆手</li>
+            <li>腰背不弓起，胸口保持打开</li>
+            <li>壶铃贴近身体，减少腰椎剪切压力</li>
+            <li>初学者脚跟落地，熟练后可轻抬双脚增加难度</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="anim-wrap" onclick="toggleAnim(this)">
+        <img class="anim-img" id="c_farmer" src="home_workout_assets/farmers-walk.png" alt="农夫行走真人四帧分解图" loading="lazy">
+        <div class="frame-focus" aria-hidden="true"></div>
+        <div class="wb">双手持铃</div><div class="mb">握力·核心·全身张力</div>
+        <div class="play-hint">点击 暂停/播放</div>
+      </div>
+      <div class="cb">
+        <div class="cn">农夫行走</div><div class="ce">Farmer's Walk</div>
+        <div class="chips"><span class="chip">3组</span><span class="chip">30秒/组</span><span class="chip">组间60s</span></div>
+        <button class="exbtn" onclick="toggleDetail(this)">查看详细步骤 ▾</button>
+        <div class="dp">
+          <div class="dl">动作步骤</div>
+          <ol class="sl">
+            <li>双手各握一个壶铃，自然垂于身侧</li>
+            <li>站直，肩胛骨向后收，胸部挺起，深吸气撑住腹腔</li>
+            <li>迈步行走，步伐稳健，脚尖朝前，眼睛平视前方</li>
+            <li>全程保持挺胸抬头，不要让肩膀下沉</li>
+            <li>行走至规定时间，放下壶铃休息</li>
+          </ol>
+          <div class="dl">动作标准</div>
+          <ul class="tl">
+            <li>肩膀主动保持水平，不随壶铃重量下沉</li>
+            <li>步伐不要过大，保持稳定节奏</li>
+            <li>不等重行走可强化核心抗旋转能力</li>
+            <li>感受手掌握力和前臂全程发力</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+<div class="div"></div>
+
+<!-- SECTION 3 -->
+<div class="sec" id="special">
+  <div class="sh">
+    <div class="si" style="background:rgba(201,168,76,.13)">🔥</div>
+    <div><div class="st">功能性专项训练</div><div class="ss">盆底肌·髋部·针对性能力提升</div></div>
+  </div>
+  <div class="grid">
+
+    <div class="card">
+      <div class="anim-wrap" onclick="toggleAnim(this)">
+        <img class="anim-img" id="c_bridge" src="home_workout_assets/weighted-glute-bridge.png" alt="壶铃负重臀桥真人四帧分解图" loading="lazy">
+        <div class="frame-focus" aria-hidden="true"></div>
+        <div class="wb">10kg</div><div class="mb">臀大肌·盆底肌·腘绳</div>
+        <div class="play-hint">点击 暂停/播放</div>
+      </div>
+      <div class="cb">
+        <div class="cn">壶铃负重臀桥</div><div class="ce">Weighted Glute Bridge</div>
+        <div class="chips"><span class="chip">3组</span><span class="chip">15次/组</span><span class="chip">顶部停2秒</span></div>
+        <button class="exbtn" onclick="toggleDetail(this)">查看详细步骤 ▾</button>
+        <div class="dp">
+          <div class="dl">动作步骤</div>
+          <ol class="sl">
+            <li>仰卧，双膝弯曲约90°，脚跟距臀部一拳</li>
+            <li>将壶铃放在髋骨处，双手握住防止滑落</li>
+            <li>呼气发力，臀部向上推至大腿与躯干成一线</li>
+            <li>顶部主动夹紧臀部，同时做一次凯格尔收缩，停留2秒</li>
+            <li>慢慢放下，臀部不完全落地，维持张力，重复</li>
+          </ol>
+          <div class="dl">动作标准</div>
+          <ul class="tl">
+            <li>发力点是臀部，腰部不应有任何压力</li>
+            <li>脚跟踩地发力，不要踮脚尖</li>
+            <li>顶部夹臀配合凯格尔是功能提升的关键组合</li>
+          </ul>
+          <div class="dl">进阶方式</div>
+          <ul class="tl">
+            <li>单腿臀桥：一腿伸直，难度与效果翻倍</li>
+            <li>脚踩高台：增加动作幅度，更深度激活</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="anim-wrap" onclick="toggleAnim(this)">
+        <img class="anim-img" id="c_lunge" src="home_workout_assets/lateral-lunge.png" alt="壶铃侧弓步真人四帧分解图" loading="lazy">
+        <div class="frame-focus" aria-hidden="true"></div>
+        <div class="wb">2.5kg</div><div class="mb">内收肌·髋部·平衡</div>
+        <div class="play-hint">点击 暂停/播放</div>
+      </div>
+      <div class="cb">
+        <div class="cn">壶铃侧弓步</div><div class="ce">Lateral Lunge</div>
+        <div class="chips"><span class="chip">3组</span><span class="chip">10次/每侧</span><span class="chip">组间60s</span></div>
+        <button class="exbtn" onclick="toggleDetail(this)">查看详细步骤 ▾</button>
+        <div class="dp">
+          <div class="dl">动作步骤</div>
+          <ol class="sl">
+            <li>双手持壶铃置于胸前，站立，双脚并拢</li>
+            <li>一腿大步向侧方迈出，脚尖稍外展</li>
+            <li>重心转移至迈出腿，屈膝下蹲，另一腿伸直</li>
+            <li>直腿一侧大腿内侧感受强烈拉伸</li>
+            <li>蹬地回到站立，换另一侧，交替进行</li>
+          </ol>
+          <div class="dl">动作标准</div>
+          <ul class="tl">
+            <li>下蹲腿膝盖不要过度超过脚尖</li>
+            <li>直腿侧脚跟踩实，脚尖朝前</li>
+            <li>上身保持直立，不要侧倾</li>
+            <li>感受大腿内收肌群的拉伸是关键</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="anim-wrap" onclick="toggleAnim(this)">
+        <img class="anim-img" id="c_front_lunge" src="home_workout_assets/single-arm-forward-lunge.png" alt="壶铃单臂前弓步真人四帧分解图" loading="lazy">
+        <div class="frame-focus" aria-hidden="true"></div>
+        <div class="wb">10kg</div><div class="mb">股四头肌·臀部·核心抗侧屈</div>
+        <div class="play-hint">点击 暂停/播放</div>
+      </div>
+      <div class="cb">
+        <div class="cn">壶铃单臂前弓步</div><div class="ce">Single-arm Kettlebell Forward Lunge</div>
+        <div class="chips"><span class="chip">3组</span><span class="chip">8-10次/每侧</span><span class="chip">单侧负重</span></div>
+        <button class="exbtn" onclick="toggleDetail(this)">查看详细步骤 ▾</button>
+        <div class="dp">
+          <div class="dl">动作步骤</div>
+          <ol class="sl">
+            <li>单手将壶铃置于肩前架式位，另一手自然伸出保持平衡</li>
+            <li>向前迈一步，前脚踩稳，身体保持直立</li>
+            <li>下沉至前膝约90°，后膝接近地面但不砸地</li>
+            <li>前脚蹬地推回起始位置，左右两侧交替训练</li>
+            <li>换手持铃训练另一侧，让核心两侧都得到刺激</li>
+          </ol>
+          <div class="dl">动作标准</div>
+          <ul class="tl">
+            <li>前膝沿脚尖方向，不内扣</li>
+            <li>躯干保持垂直，不向持铃侧歪斜</li>
+            <li>壶铃稳定贴近前臂和肩膀，不要晃动</li>
+            <li>回推时用前脚发力，不靠后脚弹起</li>
+          </ul>
+          <div class="dl">训练价值</div>
+          <ul class="tl">
+            <li>单侧负重会加强核心抗侧屈能力</li>
+            <li>比普通弓步更接近日常走路和运动中的单腿稳定需求</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+<div class="div"></div>
+
+<!-- SECTION 4 -->
+<div class="sec" id="plank">
+  <div class="sh">
+    <div class="si" style="background:rgba(74,201,122,.13)">🧱</div>
+    <div><div class="st">平板支撑系列</div><div class="ss">核心稳定·盆底联动·基础到进阶</div></div>
+  </div>
+  <div class="grid">
+
+    <div class="card">
+      <div class="anim-wrap" onclick="toggleAnim(this)">
+        <img class="anim-img" id="c_plank" src="home_workout_assets/forearm-plank.png" alt="标准肘撑平板真人四帧分解图" loading="lazy">
+        <div class="frame-focus" aria-hidden="true"></div>
+        <div class="wb">自重</div><div class="mb">核心·肩·盆底</div>
+        <div class="play-hint">点击 暂停/播放</div>
+      </div>
+      <div class="cb">
+        <div class="cn">标准肘撑平板</div><div class="ce">Forearm Plank</div>
+        <div class="chips"><span class="chip">3组</span><span class="chip">30-60秒/组</span><span class="chip">组间45s</span></div>
+        <button class="exbtn" onclick="toggleDetail(this)">查看详细步骤 ▾</button>
+        <div class="dp">
+          <div class="dl">动作步骤</div>
+          <ol class="sl">
+            <li>趴下，双肘弯曲，肘置于肩正下方，前臂平行</li>
+            <li>脚尖踩地，膝盖离地，撑起身体</li>
+            <li>收紧腹部和臀部，身体从头到脚跟呈一条直线</li>
+            <li>颈部中立，眼看地面，均匀呼吸不憋气</li>
+            <li>坚持至规定时间，姿势变形立即结束</li>
+          </ol>
+          <div class="dl">动作标准</div>
+          <ul class="tl">
+            <li>不塌腰（腰部下沉最常见）</li>
+            <li>不撅臀（臀部过高则核心参与减少）</li>
+            <li>肩胛骨微微分开，不耸肩</li>
+            <li>质量远比时间重要</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="anim-wrap" onclick="toggleAnim(this)">
+        <img class="anim-img" id="c_sidepl" src="home_workout_assets/side-plank.png" alt="侧平板支撑真人四帧分解图" loading="lazy">
+        <div class="frame-focus" aria-hidden="true"></div>
+        <div class="wb">自重</div><div class="mb">腹斜肌·臀中肌</div>
+        <div class="play-hint">点击 暂停/播放</div>
+      </div>
+      <div class="cb">
+        <div class="cn">侧平板支撑</div><div class="ce">Side Plank</div>
+        <div class="chips"><span class="chip">2组</span><span class="chip">20-40秒/每侧</span><span class="chip">两侧交替</span></div>
+        <button class="exbtn" onclick="toggleDetail(this)">查看详细步骤 ▾</button>
+        <div class="dp">
+          <div class="dl">动作步骤</div>
+          <ol class="sl">
+            <li>侧卧，一侧前臂撑地，肘在肩正下方</li>
+            <li>双脚叠放（标准）或前后分开（简单版）</li>
+            <li>呼气发力，髋部抬起离地，身体成一条直线</li>
+            <li>上方手叉腰或向上伸展，保持稳定</li>
+            <li>坚持规定时间，换另一侧</li>
+          </ol>
+          <div class="dl">动作标准</div>
+          <ul class="tl">
+            <li>髋部不要下沉，主动向上顶</li>
+            <li>身体保持侧面一个平面，不要前后旋转</li>
+            <li>主动收缩腹斜肌和臀中肌</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="anim-wrap" onclick="toggleAnim(this)">
+        <img class="anim-img" id="c_drag" src="home_workout_assets/plank-kettlebell-drag.png" alt="平板壶铃拖拽真人四帧分解图" loading="lazy">
+        <div class="frame-focus" aria-hidden="true"></div>
+        <div class="wb">2.5kg</div><div class="mb">核心抗旋·进阶</div>
+        <div class="play-hint">点击 暂停/播放</div>
+      </div>
+      <div class="cb">
+        <div class="cn">平板 + 壶铃拖拽</div><div class="ce">Plank Kettlebell Drag</div>
+        <div class="chips"><span class="chip">3组</span><span class="chip">8次/每侧</span><span class="chip">进阶动作</span></div>
+        <button class="exbtn" onclick="toggleDetail(this)">查看详细步骤 ▾</button>
+        <div class="dp">
+          <div class="dl">动作步骤</div>
+          <ol class="sl">
+            <li>进入直臂平板支撑（手掌撑地），壶铃置于身体一侧</li>
+            <li>保持平板姿势，一手伸向对侧，将壶铃拖过身体</li>
+            <li>壶铃到达另一侧，手回原位，换另一手重复</li>
+            <li>全程核心收紧，骨盆保持水平</li>
+            <li>想象腹部放了一杯水，不能洒出来</li>
+          </ol>
+          <div class="dl">动作标准</div>
+          <ul class="tl">
+            <li>骨盆全程水平，拖拽时不旋转是核心</li>
+            <li>支撑臂微弯，不要锁死肘关节</li>
+            <li>拖拽时呼气，回位时吸气</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+<div class="div"></div>
+
+<!-- SECTION 5 -->
+<div class="sec" id="kegel">
+  <div class="sh">
+    <div class="si" style="background:rgba(201,168,76,.13)">🎯</div>
+    <div><div class="st">凯格尔运动</div><div class="ss">内功训练·盆底肌专项·随时随地</div></div>
+  </div>
+  <div class="grid">
+    <div class="card">
+      <div class="anim-wrap" onclick="toggleAnim(this)">
+        <img class="anim-img" id="c_kegel" src="home_workout_assets/kegel-exercise.png" alt="凯格尔运动四帧示意图" loading="lazy">
+        <div class="frame-focus" aria-hidden="true"></div>
+        <div class="wb">无需器材</div><div class="mb">盆底肌·深层肌群</div>
+        <div class="play-hint">点击 暂停/播放</div>
+      </div>
+      <div class="cb">
+        <div class="cn">凯格尔运动</div><div class="ce">Kegel Exercise</div>
+        <div class="chips"><span class="chip">每天2-3次</span><span class="chip">10次/组</span><span class="chip">收5秒放5秒</span></div>
+        <button class="exbtn" onclick="toggleDetail(this)">查看详细步骤 ▾</button>
+        <div class="dp">
+          <div class="dl">找到盆底肌</div>
+          <ol class="sl">
+            <li>想象小便中途忍住尿液，收缩的那块肌肉就是盆底肌</li>
+            <li>练习时不要真的憋尿，可能引起尿路感染</li>
+            <li>收缩时臀部、大腿、腹部不应明显绷紧</li>
+            <li>仰卧时更容易感知盆底肌收缩</li>
+          </ol>
+          <div class="dl">基础练习</div>
+          <ol class="sl">
+            <li>坐、站、躺均可，放松全身</li>
+            <li>收缩盆底肌，保持5秒（初期可从3秒开始）</li>
+            <li>完全放松5秒——放松与收缩同样重要</li>
+            <li>重复10次为一组，每天2-3组</li>
+          </ol>
+          <div class="dl">进阶训练</div>
+          <ul class="tl">
+            <li>快速收缩：快速收放，1秒一次，连续10次</li>
+            <li>电梯式：分层次逐步收紧再逐层放松</li>
+            <li>配合臀桥：顶部同步凯格尔，效果翻倍</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="div"></div>
+
+<!-- SCHEDULE -->
+<div class="sec" id="schedule">
+  <div class="sh">
+    <div class="si" style="background:rgba(74,201,122,.13)">📅</div>
+    <div><div class="st">每周训练计划</div><div class="ss">科学安排，避免过度训练</div></div>
+  </div>
+  <div class="sched">
+    <div class="dc on"><div class="dn">周一</div><div class="di">🏋️</div><div class="df" style="color:var(--accent)">下肢爆发</div></div>
+    <div class="dc rest"><div class="dn">周二</div><div class="di">😴</div><div class="df" style="color:var(--muted)">休息</div></div>
+    <div class="dc on"><div class="dn">周三</div><div class="di">💪</div><div class="df" style="color:var(--accent2)">上肢核心</div></div>
+    <div class="dc rest"><div class="dn">周四</div><div class="di">😴</div><div class="df" style="color:var(--muted)">休息</div></div>
+    <div class="dc on"><div class="dn">周五</div><div class="di">🔥</div><div class="df" style="color:var(--gold)">全身循环</div></div>
+    <div class="dc rest"><div class="dn">周六</div><div class="di">🧘</div><div class="df" style="color:var(--muted)">拉伸</div></div>
+    <div class="dc rest"><div class="dn">周日</div><div class="di">😴</div><div class="df" style="color:var(--muted)">完全休息</div></div>
+  </div>
+  <div class="tgrid">
+    <div class="tbox"><div class="tbl" style="color:var(--accent)">周一 · 下肢爆发</div><div class="tcon">壶铃摇摆 × 3组<br>杯式深蹲 × 3组<br>单腿硬拉 × 3组<br>壶铃臀桥 × 3组<br>平板支撑 × 3组</div></div>
+    <div class="tbox"><div class="tbl" style="color:var(--accent2)">周三 · 上肢核心</div><div class="tcon">单臂推举 × 3组<br>单臂划船 × 3组<br>俄罗斯扭转 × 3组<br>农夫行走 × 3组<br>侧平板 × 2组<br>壶铃拖拽 × 3组</div></div>
+    <div class="tbox"><div class="tbl" style="color:var(--gold)">周五 · 全身循环</div><div class="tcon">摇摆+深蹲+推举<br>划船+侧弓步<br>单臂前弓步 × 3组<br>臀桥 × 3组<br>平板全系列<br>凯格尔结尾</div></div>
+  </div>
+  <div class="kalert"><div style="font-size:12px;font-weight:700;color:var(--gold);margin-bottom:6px">⚡ 每天必做（训练日 & 休息日）</div><div style="font-size:12px;color:var(--muted)">凯格尔运动 — 早起和睡前各一组（10次，收紧5秒，放松5秒），等车、久坐间隙随时可做</div></div>
+</div>
+<div class="div"></div>
+
+<div class="sec">
+  <div class="sh"><div class="si" style="background:rgba(74,201,122,.13)">🌟</div><div><div class="st">效果倍增建议</div><div class="ss">训练之外，同样重要</div></div></div>
+  <div class="tips-grid">
+    <div class="tc"><div class="tci">😴</div><div class="tct">睡眠质量</div><div class="tcd">每晚7-9小时，睾酮主要在深度睡眠中分泌，睡眠不足直接导致激素水平下降。</div></div>
+    <div class="tc"><div class="tci">🥩</div><div class="tct">营养支持</div><div class="tcd">补充锌（牡蛎、牛肉）和健康脂肪（坚果、鸡蛋），这是合成睾酮的必要原料。</div></div>
+    <div class="tc"><div class="tci">🧘</div><div class="tct">压力管理</div><div class="tcd">慢性压力使皮质醇升高直接抑制睾酮，每天10分钟冥想或深呼吸效果显著。</div></div>
+    <div class="tc"><div class="tci">🚶</div><div class="tct">减少久坐</div><div class="tcd">久坐压迫盆腔血管，每小时起身活动5分钟，改善血液循环，配合凯格尔。</div></div>
+    <div class="tc"><div class="tci">⚖️</div><div class="tct">控制体脂</div><div class="tcd">脂肪中的芳香化酶将睾酮转化为雌激素，维持健康体脂率15-20%是关键。</div></div>
+    <div class="tc"><div class="tci">📈</div><div class="tct">记录进步</div><div class="tcd">记录每次训练数据，每4周评估进步，适时增重或提升难度，避免停滞期。</div></div>
+  </div>
+</div>
+
+<footer>💪 坚持8周，感受真正的改变</footer>
+
+<script>
+function toggleAnim(wrap){
+  wrap.classList.toggle('paused');
+  const hint = wrap.querySelector('.play-hint');
+  if (hint) hint.textContent = wrap.classList.contains('paused') ? '点击 继续播放' : '点击 暂停/播放';
+}
+function toggleDetail(btn){
+  const d = btn.nextElementSibling;
+  d.classList.toggle('open');
+  btn.textContent = d.classList.contains('open') ? '收起详细步骤 ▲' : '查看详细步骤 ▾';
+}
+function goTo(id,btn){
+  document.getElementById(id)?.scrollIntoView({behavior:'smooth',block:'start'});
+  document.querySelectorAll('.nb').forEach(b=>b.classList.remove('on'));
+  if(btn) btn.classList.add('on');
+}
+const workoutPlans={monday:{title:'周一 · 下肢爆发',items:[{name:'壶铃摇摆',id:'c_swing',sets:3,work:40,rest:60,target:'15-20次'},{name:'壶铃深蹲',id:'c_squat',sets:3,work:45,rest:60,target:'12-15次'},{name:'单腿罗马尼亚硬拉',id:'c_rdl',sets:3,work:45,rest:75,target:'每腿10次'},{name:'壶铃负重臀桥',id:'c_bridge',sets:3,work:40,rest:60,target:'15次'},{name:'标准肘撑平板',id:'c_plank',sets:3,work:45,rest:45,target:'30-60秒'}]},wednesday:{title:'周三 · 上肢核心',items:[{name:'壶铃单臂推举',id:'c_press',sets:3,work:40,rest:60,target:'每侧8-10次'},{name:'壶铃单臂划船',id:'c_row',sets:3,work:40,rest:60,target:'每侧10-12次'},{name:'壶铃俄罗斯扭转',id:'c_twist',sets:3,work:40,rest:45,target:'每侧12-16次'},{name:'农夫行走',id:'c_farmer',sets:3,work:30,rest:60,target:'30秒'},{name:'侧平板支撑',id:'c_sidepl',sets:2,work:40,rest:45,target:'每侧20-40秒'},{name:'平板 + 壶铃拖拽',id:'c_drag',sets:3,work:40,rest:60,target:'每侧8次'}]},friday:{title:'周五 · 全身循环',items:[{name:'壶铃摇摆',id:'c_swing',sets:2,work:40,rest:45,target:'15-20次'},{name:'壶铃深蹲',id:'c_squat',sets:2,work:45,rest:45,target:'12-15次'},{name:'壶铃单臂推举',id:'c_press',sets:2,work:40,rest:45,target:'每侧8-10次'},{name:'壶铃单臂划船',id:'c_row',sets:2,work:40,rest:45,target:'每侧10-12次'},{name:'壶铃侧弓步',id:'c_lunge',sets:2,work:40,rest:45,target:'每侧10次'},{name:'壶铃单臂前弓步',id:'c_front_lunge',sets:3,work:40,rest:60,target:'每侧8-10次'},{name:'壶铃负重臀桥',id:'c_bridge',sets:3,work:40,rest:45,target:'15次'},{name:'标准肘撑平板',id:'c_plank',sets:2,work:45,rest:45,target:'30-60秒'},{name:'侧平板支撑',id:'c_sidepl',sets:2,work:35,rest:45,target:'每侧20-40秒'},{name:'平板 + 壶铃拖拽',id:'c_drag',sets:2,work:40,rest:45,target:'每侧8次'},{name:'凯格尔运动',id:'c_kegel',sets:2,work:30,rest:30,target:'收5秒放5秒'}]}};
+let coach={planKey:'monday',index:0,set:1,phase:'work',remaining:40,duration:40,running:false,timer:null,finished:false,voice:true,lastCountdown:null};
+function padTime(sec){const m=Math.floor(sec/60),s=sec%60;return String(m).padStart(2,'0')+':'+String(s).padStart(2,'0')}
+function currentPlan(){return workoutPlans[coach.planKey]}
+function currentItem(){return currentPlan().items[coach.index]}
+function totalSets(plan=currentPlan()){return plan.items.reduce((n,item)=>n+item.sets,0)}
+function formatPhase(){return coach.finished?'训练完成':coach.phase==='work'?'训练中':'组间休息'}
+function nextLabel(){if(coach.finished)return'已完成今天训练';const item=currentItem();if(coach.phase==='work'&&coach.set<item.sets)return'下一个：休息 '+item.rest+' 秒，然后继续 '+item.name+' 第 '+(coach.set+1)+' 组';if(coach.phase==='rest')return'下一个：'+item.name+' 第 '+coach.set+'/'+item.sets+' 组';const next=currentPlan().items[coach.index+1];return next?'下一个动作：'+next.name:'下一个：完成收操'}
+function renderCoach(){const plan=currentPlan(),item=currentItem();document.getElementById('coachState').textContent=formatPhase();document.getElementById('coachTitle').textContent=coach.finished?plan.title+'完成':item.name;document.getElementById('coachMeta').textContent=coach.finished?'共完成 '+totalSets(plan)+' 组':'第 '+(coach.index+1)+'/'+plan.items.length+' 个动作 · 第 '+coach.set+'/'+item.sets+' 组 · 目标：'+item.target;document.getElementById('coachTimer').textContent=padTime(Math.max(0,coach.remaining));const elapsed=Math.max(0,coach.duration-coach.remaining);document.getElementById('coachBar').style.width=coach.finished?'100%':Math.round(elapsed/coach.duration*100)+'%';document.getElementById('coachNext').textContent=nextLabel();document.getElementById('coachStart').textContent=coach.running?'暂停':coach.finished?'重新开始':'开始';document.querySelectorAll('.plan-tab').forEach(btn=>btn.classList.toggle('active',btn.dataset.plan===coach.planKey));document.querySelectorAll('.card.coach-current').forEach(card=>card.classList.remove('coach-current'));if(!coach.finished&&item){const img=document.getElementById(item.id);const card=img&&img.closest('.card');if(card)card.classList.add('coach-current')}const list=document.getElementById('coachList');list.innerHTML=plan.items.map((it,i)=>{const done=coach.finished||i<coach.index;const active=!coach.finished&&i===coach.index;return '<div class="coach-item '+(active?'active ':'')+(done?'done':'')+'"><div class="coach-num">'+(i+1)+'</div><div><div>'+it.name+'</div><div class="coach-small">'+it.sets+'组 · '+it.work+'秒训练 · '+it.rest+'秒休息</div></div><div class="coach-small">'+it.target+'</div></div>'}).join('')}
+function preparePhase(nextPhase='work'){const item=currentItem();coach.phase=nextPhase;coach.duration=nextPhase==='work'?item.work:item.rest;coach.remaining=coach.duration}
+function stopTimer(){if(coach.timer)clearInterval(coach.timer);coach.timer=null;coach.running=false}
+function selectPlan(planKey){const voice=coach.voice;stopTimer();coach={planKey,index:0,set:1,phase:'work',remaining:workoutPlans[planKey].items[0].work,duration:workoutPlans[planKey].items[0].work,running:false,timer:null,finished:false,voice,lastCountdown:null};renderCoach()}
+function beep(){try{const AudioCtx=window.AudioContext||window.webkitAudioContext;if(!AudioCtx)return;const ctx=new AudioCtx(),osc=ctx.createOscillator(),gain=ctx.createGain();osc.frequency.value=coach.phase==='work'?880:520;gain.gain.value=.05;osc.connect(gain);gain.connect(ctx.destination);osc.start();setTimeout(()=>{osc.stop();ctx.close()},140)}catch(e){}}
+function speak(text, interrupt=true){
+  if(!coach.voice || !('speechSynthesis' in window)) return;
+  try{
+    if(interrupt) window.speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = 'zh-CN';
+    u.rate = 1.02;
+    u.pitch = 1;
+    u.volume = 1;
+    window.speechSynthesis.speak(u);
+  }catch(e){}
+}
+function announceCurrent(prefix='开始'){
+  if(coach.finished){speak('训练完成，做得好。');return;}
+  const item=currentItem();
+  if(coach.phase==='work') speak(prefix+'，'+item.name+'，第'+coach.set+'组。目标，'+item.target+'。');
+  else speak('休息'+coach.remaining+'秒。下一个，'+item.name+'，第'+coach.set+'组。');
+}
+function toggleVoice(){
+  coach.voice=!coach.voice;
+  const btn=document.getElementById('coachVoice');
+  btn.textContent=coach.voice?'语音 开':'语音 关';
+  btn.classList.toggle('voice-on',coach.voice);
+  if(!coach.voice && 'speechSynthesis' in window) window.speechSynthesis.cancel();
+  if(coach.voice) speak('语音播报已开启。');
+}
+function advanceCoach(){if(coach.finished){selectPlan(coach.planKey);return}const item=currentItem();let said=false;if(coach.phase==='work'){if(coach.set<item.sets){coach.set+=1;preparePhase('rest');speak('休息'+coach.remaining+'秒。');said=true}else if(coach.index<currentPlan().items.length-1){coach.index+=1;coach.set=1;preparePhase('rest');speak('动作完成。休息'+coach.remaining+'秒。下一个动作，'+currentItem().name+'。');said=true}else{coach.finished=true;stopTimer();speak('训练完成，做得好。');said=true}}else{preparePhase('work');announceCurrent('开始');said=true}coach.lastCountdown=null;beep();renderCoach()}
+function tickCoach(){if(!coach.running)return;coach.remaining-=1;if(coach.remaining>0&&coach.remaining<=3&&coach.lastCountdown!==coach.remaining){coach.lastCountdown=coach.remaining;speak(String(coach.remaining),false)}if(coach.remaining<=0)advanceCoach();renderCoach()}
+function startPauseCoach(){if(coach.finished)selectPlan(coach.planKey);if(coach.running){stopTimer();speak('已暂停。')}else{coach.running=true;coach.timer=setInterval(tickCoach,1000);announceCurrent(coach.phase==='work'?'开始':'继续');const img=currentItem()&&document.getElementById(currentItem().id);if(img)img.closest('.card')?.scrollIntoView({behavior:'smooth',block:'center'})}renderCoach()}
+function nextCoachStep(){stopTimer();advanceCoach()}
+document.addEventListener('DOMContentLoaded',()=>{document.querySelectorAll('.plan-tab').forEach(btn=>btn.addEventListener('click',()=>selectPlan(btn.dataset.plan)));document.getElementById('coachStart').addEventListener('click',startPauseCoach);document.getElementById('coachNextBtn').addEventListener('click',nextCoachStep);document.getElementById('coachReset').addEventListener('click',()=>{selectPlan(coach.planKey);speak('已重置。')});document.getElementById('coachVoice').addEventListener('click',toggleVoice);renderCoach()});
+</script>
+</body>
+</html>
