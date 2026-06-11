@@ -33,10 +33,8 @@ nav::-webkit-scrollbar{display:none}
 .anim-wrap{position:relative;min-height:330px;background:#0f141d;overflow:hidden;cursor:pointer;border-right:1px solid var(--border)}
 .anim-wrap canvas{display:none}
 .anim-img{display:block;width:100%;height:100%;min-height:330px;object-fit:contain;object-position:center;background:#0f141d}
-.frame-focus{position:absolute;top:8px;bottom:8px;left:8px;width:calc(25% - 12px);border:2px solid rgba(74,201,122,.9);box-shadow:0 0 0 999px rgba(0,0,0,.16),0 0 18px rgba(74,201,122,.45);border-radius:10px;pointer-events:none;animation:frameFocus 5.2s steps(4,end) infinite}
-.anim-wrap.paused .frame-focus{animation-play-state:paused;border-color:rgba(232,133,74,.95);box-shadow:0 0 0 999px rgba(0,0,0,.12),0 0 18px rgba(232,133,74,.45)}
-.anim-wrap::after{content:'真人分解图';position:absolute;left:10px;bottom:10px;background:rgba(0,0,0,.62);border:1px solid rgba(255,255,255,.14);color:rgba(255,255,255,.72);font-size:10px;padding:3px 8px;border-radius:8px;pointer-events:none}
-@keyframes frameFocus{0%{left:8px}25%{left:calc(25% + 4px)}50%{left:calc(50% + 0px)}75%,100%{left:calc(75% - 4px)}}
+.anim-wrap.paused
+.anim-wrap::after{content:'真人分解图';position:absolute;left:10px;bottom:10px;background:rgba(0,0,0,.62);border:1px solid rgba(255,255,255,.14);color:rgba(255,255,255,.72);font-size:10px;padding:3px 8px;border-radius:8px;pointer-events:none}50%{left:calc(50% + 0px)}75%,100%{left:calc(75% - 4px)}}
 .play-hint{position:absolute;bottom:10px;right:10px;background:rgba(0,0,0,.6);border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.6);font-size:10px;padding:3px 8px;border-radius:8px;pointer-events:none}
 .wb{position:absolute;top:10px;right:10px;background:rgba(232,133,74,.15);border:1px solid rgba(232,133,74,.4);color:var(--accent);font-size:10px;font-weight:700;padding:3px 9px;border-radius:10px}
 .mb{position:absolute;top:10px;left:10px;background:rgba(74,158,232,.12);border:1px solid rgba(74,158,232,.35);color:var(--accent2);font-size:10px;padding:3px 9px;border-radius:10px}
@@ -86,6 +84,12 @@ nav::-webkit-scrollbar{display:none}
 .coach-title{font-size:28px;font-weight:900;line-height:1.15}
 .coach-meta{font-size:12px;color:var(--muted);margin-top:7px}
 .timer{font-size:56px;font-weight:900;font-variant-numeric:tabular-nums;color:var(--accent);line-height:1;min-width:170px;text-align:right}
+.coach-player{position:relative;background:#0f141d;border:1px solid var(--border);border-radius:14px;overflow:hidden;margin:0 0 16px}
+.coach-player img{display:block;width:100%;aspect-ratio:16/9;object-fit:contain;background:#0f141d}
+.rep-panel{position:absolute;right:14px;bottom:14px;background:rgba(5,8,12,.78);border:1px solid rgba(255,255,255,.16);border-radius:12px;padding:10px 14px;min-width:128px;text-align:center;backdrop-filter:blur(8px)}
+.rep-label{font-size:10px;color:var(--muted);font-weight:800;letter-spacing:1px}
+.rep-count{font-size:30px;line-height:1.05;font-weight:900;color:var(--green);font-variant-numeric:tabular-nums;margin-top:3px}
+.rep-hint{font-size:10px;color:var(--muted);margin-top:4px}
 .coach-progress{height:10px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);border-radius:999px;overflow:hidden;margin-bottom:12px}
 .coach-progress div{height:100%;width:0;background:linear-gradient(90deg,var(--green),var(--accent));transition:width .25s linear}
 .coach-next{font-size:12px;color:var(--muted);margin-bottom:18px}
@@ -94,7 +98,7 @@ nav::-webkit-scrollbar{display:none}
 .coach-btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
 .coach-btn.voice-on{border-color:rgba(74,201,122,.5);color:var(--green)}
 .coach-list{border-left:1px solid var(--border);background:rgba(0,0,0,.13);max-height:330px;overflow:auto;padding:12px}
-.coach-item{display:grid;grid-template-columns:26px 1fr auto;gap:9px;align-items:center;padding:9px;border-radius:10px;color:var(--muted);font-size:12px}
+.coach-item{display:grid;grid-template-columns:26px 1fr auto;gap:9px;align-items:center;padding:9px;border-radius:10px;color:var(--muted);font-size:12px;cursor:pointer}
 .coach-item.active{background:rgba(74,201,122,.11);color:var(--text)}
 .coach-item.done{opacity:.5}
 .coach-num{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.06);font-size:11px;font-weight:800}
@@ -102,7 +106,7 @@ nav::-webkit-scrollbar{display:none}
 .coach-small{font-size:10px;color:var(--muted)}
 .card.coach-current{border-color:var(--green);box-shadow:0 0 0 2px rgba(74,201,122,.28),0 18px 40px rgba(0,0,0,.28)}
 footer{text-align:center;padding:36px 24px;color:var(--muted);font-size:12px;border-top:1px solid var(--border)}
-@media(max-width:900px){.card{grid-template-columns:1fr}.anim-wrap{border-right:0;border-bottom:1px solid var(--border);min-height:260px}.anim-img{min-height:260px}.cb{padding:18px}.cn{font-size:17px}.grid{gap:18px}.dp{max-height:none}.coach{grid-template-columns:1fr}.coach-list{border-left:0;border-top:1px solid var(--border);max-height:240px}.timer{text-align:left;min-width:auto}.coach-stage{align-items:flex-start;flex-direction:column}.coach-title{font-size:24px}}
+@media(max-width:900px){.card{grid-template-columns:1fr}.anim-wrap{border-right:0;border-bottom:1px solid var(--border);min-height:260px}.anim-img{min-height:260px}.cb{padding:18px}.cn{font-size:17px}.grid{gap:18px}.dp{max-height:none}.coach{grid-template-columns:1fr}.coach-list{border-left:0;border-top:1px solid var(--border);max-height:220px}.timer{text-align:left;min-width:auto;font-size:48px}.coach-stage{align-items:flex-start;flex-direction:column}.coach-title{font-size:24px}.follow-sec{min-height:100svh}.coach-main{padding:16px}.coach-player img{aspect-ratio:16/10}.rep-panel{right:10px;bottom:10px}.rep-count{font-size:26px}}
 @media(max-width:600px){
   nav{height:50px;padding:0 12px;gap:5px}
   .logo{font-size:14px;margin-right:6px}
@@ -121,7 +125,6 @@ footer{text-align:center;padding:36px 24px;color:var(--muted);font-size:12px;bor
   .card{border-radius:12px}
   .anim-wrap{min-height:0;height:auto;aspect-ratio:16/9}
   .anim-img{min-height:0;height:100%;object-fit:contain}
-  .frame-focus{top:5px;bottom:5px;border-radius:8px;width:calc(25% - 10px)}
   .play-hint{font-size:9px;right:8px;bottom:8px;padding:2px 7px}
   .anim-wrap::after{font-size:9px;left:8px;bottom:8px;padding:2px 7px}
   .wb,.mb{font-size:9px;padding:2px 7px;border-radius:8px}
@@ -183,7 +186,15 @@ footer{text-align:center;padding:36px 24px;color:var(--muted);font-size:12px;bor
           <div class="coach-title" id="coachTitle">周一 · 下肢爆发</div>
           <div class="coach-meta" id="coachMeta">第 1 个动作 · 第 1/3 组</div>
         </div>
-        <div class="timer" id="coachTimer">00:40</div>
+        <div class="timer" id="coachTimer">20</div>
+      </div>
+      <div class="coach-player">
+        <img id="coachImage" src="home_workout_assets/kettlebell-swing.png" alt="当前跟练动作图">
+        <div class="rep-panel">
+          <div class="rep-label" id="coachMode">次数计数</div>
+          <div class="rep-count" id="coachRep">0 / 20</div>
+          <div class="rep-hint" id="coachHint">开始后自动数到 20 次</div>
+        </div>
       </div>
       <div class="coach-progress"><div id="coachBar"></div></div>
       <div class="coach-next" id="coachNext">下一个：壶铃深蹲</div>
@@ -210,13 +221,12 @@ footer{text-align:center;padding:36px 24px;color:var(--muted);font-size:12px;bor
     <div class="card">
       <div class="anim-wrap" onclick="toggleAnim(this)">
         <img class="anim-img" id="c_swing" src="home_workout_assets/kettlebell-swing.png" alt="壶铃摇摆真人四帧分解图" loading="lazy">
-        <div class="frame-focus" aria-hidden="true"></div>
         <div class="wb">10kg</div><div class="mb">臀部·核心·腘绳肌</div>
-        <div class="play-hint">点击 暂停/播放</div>
+        <div class="play-hint">真人分解图</div>
       </div>
       <div class="cb">
         <div class="cn">壶铃摇摆</div><div class="ce">Kettlebell Swing</div>
-        <div class="chips"><span class="chip">3组</span><span class="chip">15-20次/组</span><span class="chip">组间60s</span></div>
+        <div class="chips"><span class="chip">3组</span><span class="chip">20次/组</span><span class="chip">组间60s</span></div>
         <button class="exbtn" onclick="toggleDetail(this)">查看详细步骤 ▾</button>
         <div class="dp">
           <div class="dl">动作步骤</div>
@@ -247,13 +257,12 @@ footer{text-align:center;padding:36px 24px;color:var(--muted);font-size:12px;bor
     <div class="card">
       <div class="anim-wrap" onclick="toggleAnim(this)">
         <img class="anim-img" id="c_squat" src="home_workout_assets/goblet-squat.png" alt="壶铃深蹲真人四帧分解图" loading="lazy">
-        <div class="frame-focus" aria-hidden="true"></div>
         <div class="wb">10kg</div><div class="mb">股四头肌·臀部·核心</div>
-        <div class="play-hint">点击 暂停/播放</div>
+        <div class="play-hint">真人分解图</div>
       </div>
       <div class="cb">
         <div class="cn">壶铃深蹲</div><div class="ce">Goblet Squat</div>
-        <div class="chips"><span class="chip">3组</span><span class="chip">12-15次/组</span><span class="chip">组间60s</span></div>
+        <div class="chips"><span class="chip">3组</span><span class="chip">20次/组</span><span class="chip">组间60s</span></div>
         <button class="exbtn" onclick="toggleDetail(this)">查看详细步骤 ▾</button>
         <div class="dp">
           <div class="dl">动作步骤</div>
@@ -278,9 +287,8 @@ footer{text-align:center;padding:36px 24px;color:var(--muted);font-size:12px;bor
     <div class="card">
       <div class="anim-wrap" onclick="toggleAnim(this)">
         <img class="anim-img" id="c_rdl" src="home_workout_assets/single-leg-rdl.png" alt="单腿罗马尼亚硬拉真人四帧分解图" loading="lazy">
-        <div class="frame-focus" aria-hidden="true"></div>
         <div class="wb">10kg</div><div class="mb">臀部·腘绳肌·平衡</div>
-        <div class="play-hint">点击 暂停/播放</div>
+        <div class="play-hint">真人分解图</div>
       </div>
       <div class="cb">
         <div class="cn">单腿罗马尼亚硬拉</div><div class="ce">Single-leg RDL</div>
@@ -325,13 +333,12 @@ footer{text-align:center;padding:36px 24px;color:var(--muted);font-size:12px;bor
     <div class="card">
       <div class="anim-wrap" onclick="toggleAnim(this)">
         <img class="anim-img" id="c_press" src="home_workout_assets/overhead-press.png" alt="壶铃单臂推举真人四帧分解图" loading="lazy">
-        <div class="frame-focus" aria-hidden="true"></div>
         <div class="wb">10kg</div><div class="mb">肩部·三头肌·核心</div>
-        <div class="play-hint">点击 暂停/播放</div>
+        <div class="play-hint">真人分解图</div>
       </div>
       <div class="cb">
         <div class="cn">壶铃单臂推举</div><div class="ce">Single-arm Overhead Press</div>
-        <div class="chips"><span class="chip">3组</span><span class="chip">8-10次/每侧</span><span class="chip">组间60s</span></div>
+        <div class="chips"><span class="chip">3组</span><span class="chip">20次/每侧</span><span class="chip">组间60s</span></div>
         <button class="exbtn" onclick="toggleDetail(this)">查看详细步骤 ▾</button>
         <div class="dp">
           <div class="dl">动作步骤</div>
@@ -356,13 +363,12 @@ footer{text-align:center;padding:36px 24px;color:var(--muted);font-size:12px;bor
     <div class="card">
       <div class="anim-wrap" onclick="toggleAnim(this)">
         <img class="anim-img" id="c_row" src="home_workout_assets/bent-over-row.png" alt="壶铃单臂划船真人四帧分解图" loading="lazy">
-        <div class="frame-focus" aria-hidden="true"></div>
         <div class="wb">10kg</div><div class="mb">背阔肌·菱形肌·二头</div>
-        <div class="play-hint">点击 暂停/播放</div>
+        <div class="play-hint">真人分解图</div>
       </div>
       <div class="cb">
         <div class="cn">壶铃单臂划船</div><div class="ce">Single-arm Bent-over Row</div>
-        <div class="chips"><span class="chip">3组</span><span class="chip">10-12次/每侧</span><span class="chip">组间60s</span></div>
+        <div class="chips"><span class="chip">3组</span><span class="chip">20次/每侧</span><span class="chip">组间60s</span></div>
         <button class="exbtn" onclick="toggleDetail(this)">查看详细步骤 ▾</button>
         <div class="dp">
           <div class="dl">动作步骤</div>
@@ -387,9 +393,8 @@ footer{text-align:center;padding:36px 24px;color:var(--muted);font-size:12px;bor
     <div class="card">
       <div class="anim-wrap" onclick="toggleAnim(this)">
         <img class="anim-img" id="c_twist" src="home_workout_assets/russian-twist.png" alt="壶铃俄罗斯扭转真人四帧分解图" loading="lazy">
-        <div class="frame-focus" aria-hidden="true"></div>
         <div class="wb">2.5kg</div><div class="mb">腹斜肌·核心抗旋·髋屈肌</div>
-        <div class="play-hint">点击 暂停/播放</div>
+        <div class="play-hint">真人分解图</div>
       </div>
       <div class="cb">
         <div class="cn">壶铃俄罗斯扭转</div><div class="ce">Kettlebell Russian Twist</div>
@@ -418,9 +423,8 @@ footer{text-align:center;padding:36px 24px;color:var(--muted);font-size:12px;bor
     <div class="card">
       <div class="anim-wrap" onclick="toggleAnim(this)">
         <img class="anim-img" id="c_farmer" src="home_workout_assets/farmers-walk.png" alt="农夫行走真人四帧分解图" loading="lazy">
-        <div class="frame-focus" aria-hidden="true"></div>
         <div class="wb">双手持铃</div><div class="mb">握力·核心·全身张力</div>
-        <div class="play-hint">点击 暂停/播放</div>
+        <div class="play-hint">真人分解图</div>
       </div>
       <div class="cb">
         <div class="cn">农夫行走</div><div class="ce">Farmer's Walk</div>
@@ -461,9 +465,8 @@ footer{text-align:center;padding:36px 24px;color:var(--muted);font-size:12px;bor
     <div class="card">
       <div class="anim-wrap" onclick="toggleAnim(this)">
         <img class="anim-img" id="c_bridge" src="home_workout_assets/weighted-glute-bridge.png" alt="壶铃负重臀桥真人四帧分解图" loading="lazy">
-        <div class="frame-focus" aria-hidden="true"></div>
         <div class="wb">10kg</div><div class="mb">臀大肌·盆底肌·腘绳</div>
-        <div class="play-hint">点击 暂停/播放</div>
+        <div class="play-hint">真人分解图</div>
       </div>
       <div class="cb">
         <div class="cn">壶铃负重臀桥</div><div class="ce">Weighted Glute Bridge</div>
@@ -496,13 +499,12 @@ footer{text-align:center;padding:36px 24px;color:var(--muted);font-size:12px;bor
     <div class="card">
       <div class="anim-wrap" onclick="toggleAnim(this)">
         <img class="anim-img" id="c_lunge" src="home_workout_assets/lateral-lunge.png" alt="壶铃侧弓步真人四帧分解图" loading="lazy">
-        <div class="frame-focus" aria-hidden="true"></div>
         <div class="wb">2.5kg</div><div class="mb">内收肌·髋部·平衡</div>
-        <div class="play-hint">点击 暂停/播放</div>
+        <div class="play-hint">真人分解图</div>
       </div>
       <div class="cb">
         <div class="cn">壶铃侧弓步</div><div class="ce">Lateral Lunge</div>
-        <div class="chips"><span class="chip">3组</span><span class="chip">10次/每侧</span><span class="chip">组间60s</span></div>
+        <div class="chips"><span class="chip">3组</span><span class="chip">20次/每侧</span><span class="chip">组间60s</span></div>
         <button class="exbtn" onclick="toggleDetail(this)">查看详细步骤 ▾</button>
         <div class="dp">
           <div class="dl">动作步骤</div>
@@ -527,13 +529,12 @@ footer{text-align:center;padding:36px 24px;color:var(--muted);font-size:12px;bor
     <div class="card">
       <div class="anim-wrap" onclick="toggleAnim(this)">
         <img class="anim-img" id="c_front_lunge" src="home_workout_assets/single-arm-forward-lunge.png" alt="壶铃单臂前弓步真人四帧分解图" loading="lazy">
-        <div class="frame-focus" aria-hidden="true"></div>
         <div class="wb">10kg</div><div class="mb">股四头肌·臀部·核心抗侧屈</div>
-        <div class="play-hint">点击 暂停/播放</div>
+        <div class="play-hint">真人分解图</div>
       </div>
       <div class="cb">
         <div class="cn">壶铃单臂前弓步</div><div class="ce">Single-arm Kettlebell Forward Lunge</div>
-        <div class="chips"><span class="chip">3组</span><span class="chip">8-10次/每侧</span><span class="chip">单侧负重</span></div>
+        <div class="chips"><span class="chip">3组</span><span class="chip">20次/每侧</span><span class="chip">单侧负重</span></div>
         <button class="exbtn" onclick="toggleDetail(this)">查看详细步骤 ▾</button>
         <div class="dp">
           <div class="dl">动作步骤</div>
@@ -575,9 +576,8 @@ footer{text-align:center;padding:36px 24px;color:var(--muted);font-size:12px;bor
     <div class="card">
       <div class="anim-wrap" onclick="toggleAnim(this)">
         <img class="anim-img" id="c_plank" src="home_workout_assets/forearm-plank.png" alt="标准肘撑平板真人四帧分解图" loading="lazy">
-        <div class="frame-focus" aria-hidden="true"></div>
         <div class="wb">自重</div><div class="mb">核心·肩·盆底</div>
-        <div class="play-hint">点击 暂停/播放</div>
+        <div class="play-hint">真人分解图</div>
       </div>
       <div class="cb">
         <div class="cn">标准肘撑平板</div><div class="ce">Forearm Plank</div>
@@ -606,9 +606,8 @@ footer{text-align:center;padding:36px 24px;color:var(--muted);font-size:12px;bor
     <div class="card">
       <div class="anim-wrap" onclick="toggleAnim(this)">
         <img class="anim-img" id="c_sidepl" src="home_workout_assets/side-plank.png" alt="侧平板支撑真人四帧分解图" loading="lazy">
-        <div class="frame-focus" aria-hidden="true"></div>
         <div class="wb">自重</div><div class="mb">腹斜肌·臀中肌</div>
-        <div class="play-hint">点击 暂停/播放</div>
+        <div class="play-hint">真人分解图</div>
       </div>
       <div class="cb">
         <div class="cn">侧平板支撑</div><div class="ce">Side Plank</div>
@@ -636,13 +635,12 @@ footer{text-align:center;padding:36px 24px;color:var(--muted);font-size:12px;bor
     <div class="card">
       <div class="anim-wrap" onclick="toggleAnim(this)">
         <img class="anim-img" id="c_drag" src="home_workout_assets/plank-kettlebell-drag.png" alt="平板壶铃拖拽真人四帧分解图" loading="lazy">
-        <div class="frame-focus" aria-hidden="true"></div>
         <div class="wb">2.5kg</div><div class="mb">核心抗旋·进阶</div>
-        <div class="play-hint">点击 暂停/播放</div>
+        <div class="play-hint">真人分解图</div>
       </div>
       <div class="cb">
         <div class="cn">平板 + 壶铃拖拽</div><div class="ce">Plank Kettlebell Drag</div>
-        <div class="chips"><span class="chip">3组</span><span class="chip">8次/每侧</span><span class="chip">进阶动作</span></div>
+        <div class="chips"><span class="chip">3组</span><span class="chip">20次/每侧</span><span class="chip">进阶动作</span></div>
         <button class="exbtn" onclick="toggleDetail(this)">查看详细步骤 ▾</button>
         <div class="dp">
           <div class="dl">动作步骤</div>
@@ -677,9 +675,8 @@ footer{text-align:center;padding:36px 24px;color:var(--muted);font-size:12px;bor
     <div class="card">
       <div class="anim-wrap" onclick="toggleAnim(this)">
         <img class="anim-img" id="c_kegel" src="home_workout_assets/kegel-exercise.png" alt="凯格尔运动四帧示意图" loading="lazy">
-        <div class="frame-focus" aria-hidden="true"></div>
         <div class="wb">无需器材</div><div class="mb">盆底肌·深层肌群</div>
-        <div class="play-hint">点击 暂停/播放</div>
+        <div class="play-hint">真人分解图</div>
       </div>
       <div class="cb">
         <div class="cn">凯格尔运动</div><div class="ce">Kegel Exercise</div>
@@ -753,9 +750,8 @@ footer{text-align:center;padding:36px 24px;color:var(--muted);font-size:12px;bor
 
 <script>
 function toggleAnim(wrap){
-  wrap.classList.toggle('paused');
   const hint = wrap.querySelector('.play-hint');
-  if (hint) hint.textContent = wrap.classList.contains('paused') ? '点击 继续播放' : '点击 暂停/播放';
+  if (hint) hint.textContent = '真人分解图';
 }
 function toggleDetail(btn){
   const d = btn.nextElementSibling;
@@ -767,18 +763,20 @@ function goTo(id,btn){
   document.querySelectorAll('.nb').forEach(b=>b.classList.remove('on'));
   if(btn) btn.classList.add('on');
 }
-const workoutPlans={monday:{title:'周一 · 下肢爆发',items:[{name:'壶铃摇摆',id:'c_swing',sets:3,work:40,rest:60,target:'15-20次'},{name:'壶铃深蹲',id:'c_squat',sets:3,work:45,rest:60,target:'12-15次'},{name:'单腿罗马尼亚硬拉',id:'c_rdl',sets:3,work:45,rest:75,target:'每腿10次'},{name:'壶铃负重臀桥',id:'c_bridge',sets:3,work:40,rest:60,target:'15次'},{name:'标准肘撑平板',id:'c_plank',sets:3,work:45,rest:45,target:'30-60秒'}]},wednesday:{title:'周三 · 上肢核心',items:[{name:'壶铃单臂推举',id:'c_press',sets:3,work:40,rest:60,target:'每侧8-10次'},{name:'壶铃单臂划船',id:'c_row',sets:3,work:40,rest:60,target:'每侧10-12次'},{name:'壶铃俄罗斯扭转',id:'c_twist',sets:3,work:40,rest:45,target:'每侧12-16次'},{name:'农夫行走',id:'c_farmer',sets:3,work:30,rest:60,target:'30秒'},{name:'侧平板支撑',id:'c_sidepl',sets:2,work:40,rest:45,target:'每侧20-40秒'},{name:'平板 + 壶铃拖拽',id:'c_drag',sets:3,work:40,rest:60,target:'每侧8次'}]},friday:{title:'周五 · 全身循环',items:[{name:'壶铃摇摆',id:'c_swing',sets:2,work:40,rest:45,target:'15-20次'},{name:'壶铃深蹲',id:'c_squat',sets:2,work:45,rest:45,target:'12-15次'},{name:'壶铃单臂推举',id:'c_press',sets:2,work:40,rest:45,target:'每侧8-10次'},{name:'壶铃单臂划船',id:'c_row',sets:2,work:40,rest:45,target:'每侧10-12次'},{name:'壶铃侧弓步',id:'c_lunge',sets:2,work:40,rest:45,target:'每侧10次'},{name:'壶铃单臂前弓步',id:'c_front_lunge',sets:3,work:40,rest:60,target:'每侧8-10次'},{name:'壶铃负重臀桥',id:'c_bridge',sets:3,work:40,rest:45,target:'15次'},{name:'标准肘撑平板',id:'c_plank',sets:2,work:45,rest:45,target:'30-60秒'},{name:'侧平板支撑',id:'c_sidepl',sets:2,work:35,rest:45,target:'每侧20-40秒'},{name:'平板 + 壶铃拖拽',id:'c_drag',sets:2,work:40,rest:45,target:'每侧8次'},{name:'凯格尔运动',id:'c_kegel',sets:2,work:30,rest:30,target:'收5秒放5秒'}]}};
-let coach={planKey:'monday',index:0,set:1,phase:'work',remaining:40,duration:40,running:false,timer:null,finished:false,voice:true,lastCountdown:null};
+const workoutPlans={monday:{title:'周一 · 下肢爆发',items:[{name:'壶铃摇摆',id:'c_swing',sets:3,reps:20,rest:60,target:'20次'},{name:'壶铃深蹲',id:'c_squat',sets:3,reps:20,rest:60,target:'20次'},{name:'单腿罗马尼亚硬拉',id:'c_rdl',sets:3,reps:20,rest:75,target:'20次'},{name:'壶铃负重臀桥',id:'c_bridge',sets:3,reps:20,rest:60,target:'20次'},{name:'标准肘撑平板',id:'c_plank',sets:3,work:45,rest:45,target:'45秒'}]},wednesday:{title:'周三 · 上肢核心',items:[{name:'壶铃单臂推举',id:'c_press',sets:3,reps:20,rest:60,target:'20次'},{name:'壶铃单臂划船',id:'c_row',sets:3,reps:20,rest:60,target:'20次'},{name:'壶铃俄罗斯扭转',id:'c_twist',sets:3,reps:20,rest:45,target:'20次'},{name:'农夫行走',id:'c_farmer',sets:3,work:30,rest:60,target:'30秒'},{name:'侧平板支撑',id:'c_sidepl',sets:2,work:40,rest:45,target:'40秒'},{name:'平板 + 壶铃拖拽',id:'c_drag',sets:3,reps:20,rest:60,target:'20次'}]},friday:{title:'周五 · 全身循环',items:[{name:'壶铃摇摆',id:'c_swing',sets:2,reps:20,rest:45,target:'20次'},{name:'壶铃深蹲',id:'c_squat',sets:2,reps:20,rest:45,target:'20次'},{name:'壶铃单臂推举',id:'c_press',sets:2,reps:20,rest:45,target:'20次'},{name:'壶铃单臂划船',id:'c_row',sets:2,reps:20,rest:45,target:'20次'},{name:'壶铃侧弓步',id:'c_lunge',sets:2,reps:20,rest:45,target:'20次'},{name:'壶铃单臂前弓步',id:'c_front_lunge',sets:3,reps:20,rest:60,target:'20次'},{name:'壶铃负重臀桥',id:'c_bridge',sets:3,reps:20,rest:45,target:'20次'},{name:'标准肘撑平板',id:'c_plank',sets:2,work:45,rest:45,target:'45秒'},{name:'侧平板支撑',id:'c_sidepl',sets:2,work:35,rest:45,target:'35秒'},{name:'平板 + 壶铃拖拽',id:'c_drag',sets:2,reps:20,rest:45,target:'20次'},{name:'凯格尔运动',id:'c_kegel',sets:2,work:30,rest:30,target:'30秒'}]}};
+let coach={planKey:'monday',index:0,set:1,phase:'work',remaining:20,duration:20,rep:0,repPace:2,repTick:0,running:false,timer:null,finished:false,voice:true,lastCountdown:null,autoAdvance:null};
 function padTime(sec){const m=Math.floor(sec/60),s=sec%60;return String(m).padStart(2,'0')+':'+String(s).padStart(2,'0')}
 function currentPlan(){return workoutPlans[coach.planKey]}
 function currentItem(){return currentPlan().items[coach.index]}
 function totalSets(plan=currentPlan()){return plan.items.reduce((n,item)=>n+item.sets,0)}
 function formatPhase(){return coach.finished?'训练完成':coach.phase==='work'?'训练中':'组间休息'}
+function isRepItem(item=currentItem()){return !!item.reps}
+function itemDuration(item=currentItem()){return isRepItem(item)?item.reps*coach.repPace:item.work}
 function nextLabel(){if(coach.finished)return'已完成今天训练';const item=currentItem();if(coach.phase==='work'&&coach.set<item.sets)return'下一个：休息 '+item.rest+' 秒，然后继续 '+item.name+' 第 '+(coach.set+1)+' 组';if(coach.phase==='rest')return'下一个：'+item.name+' 第 '+coach.set+'/'+item.sets+' 组';const next=currentPlan().items[coach.index+1];return next?'下一个动作：'+next.name:'下一个：完成收操'}
-function renderCoach(){const plan=currentPlan(),item=currentItem();document.getElementById('coachState').textContent=formatPhase();document.getElementById('coachTitle').textContent=coach.finished?plan.title+'完成':item.name;document.getElementById('coachMeta').textContent=coach.finished?'共完成 '+totalSets(plan)+' 组':'第 '+(coach.index+1)+'/'+plan.items.length+' 个动作 · 第 '+coach.set+'/'+item.sets+' 组 · 目标：'+item.target;document.getElementById('coachTimer').textContent=padTime(Math.max(0,coach.remaining));const elapsed=Math.max(0,coach.duration-coach.remaining);document.getElementById('coachBar').style.width=coach.finished?'100%':Math.round(elapsed/coach.duration*100)+'%';document.getElementById('coachNext').textContent=nextLabel();document.getElementById('coachStart').textContent=coach.running?'暂停':coach.finished?'重新开始':'开始';document.querySelectorAll('.plan-tab').forEach(btn=>btn.classList.toggle('active',btn.dataset.plan===coach.planKey));document.querySelectorAll('.card.coach-current').forEach(card=>card.classList.remove('coach-current'));if(!coach.finished&&item){const img=document.getElementById(item.id);const card=img&&img.closest('.card');if(card)card.classList.add('coach-current')}const list=document.getElementById('coachList');list.innerHTML=plan.items.map((it,i)=>{const done=coach.finished||i<coach.index;const active=!coach.finished&&i===coach.index;return '<div class="coach-item '+(active?'active ':'')+(done?'done':'')+'"><div class="coach-num">'+(i+1)+'</div><div><div>'+it.name+'</div><div class="coach-small">'+it.sets+'组 · '+it.work+'秒训练 · '+it.rest+'秒休息</div></div><div class="coach-small">'+it.target+'</div></div>'}).join('')}
-function preparePhase(nextPhase='work'){const item=currentItem();coach.phase=nextPhase;coach.duration=nextPhase==='work'?item.work:item.rest;coach.remaining=coach.duration}
-function stopTimer(){if(coach.timer)clearInterval(coach.timer);coach.timer=null;coach.running=false}
-function selectPlan(planKey){const voice=coach.voice;stopTimer();coach={planKey,index:0,set:1,phase:'work',remaining:workoutPlans[planKey].items[0].work,duration:workoutPlans[planKey].items[0].work,running:false,timer:null,finished:false,voice,lastCountdown:null};renderCoach()}
+function renderCoach(){const plan=currentPlan(),item=currentItem();document.getElementById('coachState').textContent=formatPhase();document.getElementById('coachTitle').textContent=coach.finished?plan.title+'完成':item.name;document.getElementById('coachMeta').textContent=coach.finished?'共完成 '+totalSets(plan)+' 组':'第 '+(coach.index+1)+'/'+plan.items.length+' 个动作 · 第 '+coach.set+'/'+item.sets+' 组 · 目标：'+item.target;document.getElementById('coachTimer').textContent=coach.phase==='rest'?padTime(Math.max(0,coach.remaining)):(isRepItem(item)?String(Math.min(coach.rep,item.reps)):padTime(Math.max(0,coach.remaining)));document.getElementById('coachMode').textContent=coach.phase==='rest'?'休息倒计时':isRepItem(item)?'次数计数':'时间计时';document.getElementById('coachRep').textContent=coach.phase==='rest'?padTime(Math.max(0,coach.remaining)):(isRepItem(item)?coach.rep+' / '+item.reps:padTime(Math.max(0,coach.remaining)));document.getElementById('coachHint').textContent=coach.phase==='rest'?'准备下一组，调整呼吸':isRepItem(item)?'显示和语音同步计数':'保持动作质量，听倒计时';const originalImg=document.getElementById(item.id);if(originalImg){document.getElementById('coachImage').src=originalImg.getAttribute('src');document.getElementById('coachImage').alt=item.name+'分解图'}const elapsed=coach.phase==='rest'?Math.max(0,coach.duration-coach.remaining):(isRepItem(item)?coach.rep*coach.repPace:Math.max(0,coach.duration-coach.remaining));document.getElementById('coachBar').style.width=coach.finished?'100%':Math.round(elapsed/coach.duration*100)+'%';document.getElementById('coachNext').textContent=nextLabel();document.getElementById('coachStart').textContent=coach.running?'暂停':coach.finished?'重新开始':'开始';document.querySelectorAll('.plan-tab').forEach(btn=>btn.classList.toggle('active',btn.dataset.plan===coach.planKey));document.querySelectorAll('.card.coach-current').forEach(card=>card.classList.remove('coach-current'));if(!coach.finished&&item){const img=document.getElementById(item.id);const card=img&&img.closest('.card');if(card)card.classList.add('coach-current')}const list=document.getElementById('coachList');list.innerHTML=plan.items.map((it,i)=>{const done=coach.finished||i<coach.index;const active=!coach.finished&&i===coach.index;const mode=it.reps?it.reps+'次计数':it.work+'秒计时';return '<div class="coach-item '+(active?'active ':'')+(done?'done':'')+'" data-index="'+i+'"><div class="coach-num">'+(i+1)+'</div><div><div>'+it.name+'</div><div class="coach-small">'+it.sets+'组 · '+mode+' · '+it.rest+'秒休息</div></div><div class="coach-small">'+it.target+'</div></div>'}).join('');list.querySelectorAll('.coach-item').forEach(row=>row.addEventListener('click',()=>jumpToAction(Number(row.dataset.index))))}
+function preparePhase(nextPhase='work'){const item=currentItem();if(coach.autoAdvance){clearTimeout(coach.autoAdvance);coach.autoAdvance=null}coach.phase=nextPhase;coach.duration=nextPhase==='work'?itemDuration(item):item.rest;coach.remaining=coach.duration;coach.rep=0;coach.repTick=0;coach.lastCountdown=null}
+function stopTimer(){if(coach.timer)clearInterval(coach.timer);if(coach.autoAdvance)clearTimeout(coach.autoAdvance);coach.timer=null;coach.autoAdvance=null;coach.running=false}
+function selectPlan(planKey){const voice=coach.voice;stopTimer();const first=workoutPlans[planKey].items[0];coach={planKey,index:0,set:1,phase:'work',remaining:first.reps?first.reps*2:first.work,duration:first.reps?first.reps*2:first.work,rep:0,repPace:2,repTick:0,running:false,timer:null,finished:false,voice,lastCountdown:null,autoAdvance:null};renderCoach()}
 function beep(){try{const AudioCtx=window.AudioContext||window.webkitAudioContext;if(!AudioCtx)return;const ctx=new AudioCtx(),osc=ctx.createOscillator(),gain=ctx.createGain();osc.frequency.value=coach.phase==='work'?880:520;gain.gain.value=.05;osc.connect(gain);gain.connect(ctx.destination);osc.start();setTimeout(()=>{osc.stop();ctx.close()},140)}catch(e){}}
 function speak(text, interrupt=true){
   if(!coach.voice || !('speechSynthesis' in window)) return;
@@ -795,7 +793,7 @@ function speak(text, interrupt=true){
 function announceCurrent(prefix='开始'){
   if(coach.finished){speak('训练完成，做得好。');return;}
   const item=currentItem();
-  if(coach.phase==='work') speak(prefix+'，'+item.name+'，第'+coach.set+'组。目标，'+item.target+'。');
+  if(coach.phase==='work') speak(prefix+'，'+item.name+'，第'+coach.set+'组。'+(isRepItem(item)?'跟我数二十次。':'目标，'+item.target+'。'));
   else speak('休息'+coach.remaining+'秒。下一个，'+item.name+'，第'+coach.set+'组。');
 }
 function toggleVoice(){
@@ -807,9 +805,13 @@ function toggleVoice(){
   if(coach.voice) speak('语音播报已开启。');
 }
 function advanceCoach(){if(coach.finished){selectPlan(coach.planKey);return}const item=currentItem();let said=false;if(coach.phase==='work'){if(coach.set<item.sets){coach.set+=1;preparePhase('rest');speak('休息'+coach.remaining+'秒。');said=true}else if(coach.index<currentPlan().items.length-1){coach.index+=1;coach.set=1;preparePhase('rest');speak('动作完成。休息'+coach.remaining+'秒。下一个动作，'+currentItem().name+'。');said=true}else{coach.finished=true;stopTimer();speak('训练完成，做得好。');said=true}}else{preparePhase('work');announceCurrent('开始');said=true}coach.lastCountdown=null;beep();renderCoach()}
-function tickCoach(){if(!coach.running)return;coach.remaining-=1;if(coach.remaining>0&&coach.remaining<=3&&coach.lastCountdown!==coach.remaining){coach.lastCountdown=coach.remaining;speak(String(coach.remaining),false)}if(coach.remaining<=0)advanceCoach();renderCoach()}
-function startPauseCoach(){if(coach.finished)selectPlan(coach.planKey);if(coach.running){stopTimer();speak('已暂停。')}else{coach.running=true;coach.timer=setInterval(tickCoach,1000);announceCurrent(coach.phase==='work'?'开始':'继续');const img=currentItem()&&document.getElementById(currentItem().id);if(img)img.closest('.card')?.scrollIntoView({behavior:'smooth',block:'center'})}renderCoach()}
+function commitRep(n){const item=currentItem();if(!isRepItem(item)||coach.phase!=='work'||n<=coach.rep)return;coach.rep=n;coach.remaining=Math.max(0,(item.reps-coach.rep)*coach.repPace);renderCoach();if(coach.rep>=item.reps){if(coach.timer)clearInterval(coach.timer);coach.timer=null;coach.autoAdvance=setTimeout(()=>{coach.autoAdvance=null;advanceCoach();if(coach.running&&!coach.finished)coach.timer=setInterval(tickCoach,1000)},1200)}}
+function speakRep(n){if(!coach.voice||!('speechSynthesis' in window)){commitRep(n);return}try{const u=new SpeechSynthesisUtterance(String(n));u.lang='zh-CN';u.rate=1.02;u.pitch=1;u.volume=1;let committed=false;u.onstart=()=>{committed=true;commitRep(n)};u.onerror=()=>{if(!committed)commitRep(n)};u.onend=()=>{if(!committed)commitRep(n)};window.speechSynthesis.speak(u)}catch(e){commitRep(n)}}
+function countRep(){const item=currentItem();if(!isRepItem(item)||coach.phase!=='work'||coach.rep>=item.reps)return;const nextRep=coach.rep+1;speakRep(nextRep)}
+function tickCoach(){if(!coach.running)return;const item=currentItem();if(coach.phase==='work'&&isRepItem(item)){coach.repTick+=1;if(coach.repTick>=coach.repPace){coach.repTick=0;countRep()}}else{coach.remaining-=1;if(coach.remaining>0&&coach.remaining<=3&&coach.lastCountdown!==coach.remaining){coach.lastCountdown=coach.remaining;speak(String(coach.remaining),false)}if(coach.remaining<=0)advanceCoach();renderCoach()}}
+function startPauseCoach(){if(coach.finished)selectPlan(coach.planKey);if(coach.running){stopTimer();speak('已暂停。')}else{coach.running=true;if(!coach.timer&&!coach.autoAdvance)coach.timer=setInterval(tickCoach,1000);announceCurrent(coach.phase==='work'?'开始':'继续');const img=currentItem()&&document.getElementById(currentItem().id);if(img)img.closest('.card')?.scrollIntoView({behavior:'smooth',block:'center'})}renderCoach()}
 function nextCoachStep(){stopTimer();advanceCoach()}
+function jumpToAction(i){stopTimer();coach.index=i;coach.set=1;coach.finished=false;preparePhase('work');renderCoach();document.getElementById('follow').scrollIntoView({behavior:'smooth',block:'start'})}
 document.addEventListener('DOMContentLoaded',()=>{document.querySelectorAll('.plan-tab').forEach(btn=>btn.addEventListener('click',()=>selectPlan(btn.dataset.plan)));document.getElementById('coachStart').addEventListener('click',startPauseCoach);document.getElementById('coachNextBtn').addEventListener('click',nextCoachStep);document.getElementById('coachReset').addEventListener('click',()=>{selectPlan(coach.planKey);speak('已重置。')});document.getElementById('coachVoice').addEventListener('click',toggleVoice);renderCoach()});
 </script>
 </body>
