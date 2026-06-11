@@ -3,6 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#e8854a">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="壶铃跟练">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192.png">
+<link rel="apple-touch-icon" href="/icons/icon-192.png">
 <title>家庭壶铃训练计划</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=Noto+Serif+SC:wght@600;700;900&display=swap');
@@ -870,6 +877,9 @@ async function toggleFollowFullscreen(){
 }
 function jumpToAction(i){stopTimer();coach.index=i;coach.set=1;coach.finished=false;preparePhase('work');renderCoach();document.getElementById('follow').scrollIntoView({behavior:'smooth',block:'start'})}
 document.addEventListener('DOMContentLoaded',()=>{document.querySelectorAll('.plan-tab').forEach(btn=>btn.addEventListener('click',()=>selectPlan(btn.dataset.plan)));document.getElementById('coachStart').addEventListener('click',startPauseCoach);document.getElementById('coachNextBtn').addEventListener('click',nextCoachStep);document.getElementById('coachReset').addEventListener('click',()=>{selectPlan(coach.planKey);speak('已重置。')});document.getElementById('coachVoice').addEventListener('click',toggleVoice);document.getElementById('coachFullscreen').addEventListener('click',toggleFollowFullscreen);document.addEventListener('fullscreenchange',()=>{if(!document.fullscreenElement&&document.body.classList.contains('follow-fullscreen')){const btn=document.getElementById('coachFullscreen');document.body.classList.remove('follow-fullscreen');if(btn){btn.textContent='跟练全屏';btn.classList.remove('fullscreen-on')}}});renderCoach()});
+if('serviceWorker' in navigator){
+  window.addEventListener('load',()=>navigator.serviceWorker.register('/service-worker.js').catch(()=>{}));
+}
 </script>
 </body>
 </html>
