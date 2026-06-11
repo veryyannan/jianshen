@@ -97,6 +97,7 @@ nav::-webkit-scrollbar{display:none}
 .coach-btn{background:rgba(255,255,255,.05);border:1px solid var(--border);color:var(--text);font-family:inherit;font-size:13px;font-weight:700;padding:10px 16px;border-radius:10px;cursor:pointer}
 .coach-btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
 .coach-btn.voice-on{border-color:rgba(74,201,122,.5);color:var(--green)}
+.coach-btn.fullscreen-on{border-color:rgba(74,158,232,.65);color:#8fc6ff}
 .coach-list{border-left:1px solid var(--border);background:rgba(0,0,0,.13);max-height:330px;overflow:auto;padding:12px}
 .coach-item{display:grid;grid-template-columns:26px 1fr auto;gap:9px;align-items:center;padding:9px;border-radius:10px;color:var(--muted);font-size:12px;cursor:pointer}
 .coach-item.active{background:rgba(74,201,122,.11);color:var(--text)}
@@ -105,8 +106,35 @@ nav::-webkit-scrollbar{display:none}
 .coach-item.active .coach-num{background:var(--green);color:#07110b}
 .coach-small{font-size:10px;color:var(--muted)}
 .card.coach-current{border-color:var(--green);box-shadow:0 0 0 2px rgba(74,201,122,.28),0 18px 40px rgba(0,0,0,.28)}
+body.follow-fullscreen{overflow:hidden;background:#090c11}
+body.follow-fullscreen nav,body.follow-fullscreen .hero,body.follow-fullscreen .div,body.follow-fullscreen .sec:not(.follow-sec),body.follow-fullscreen footer{display:none}
+body.follow-fullscreen .follow-sec{max-width:none;width:100vw;height:100svh;min-height:100svh;padding:0;margin:0;display:flex;flex-direction:column;background:#090c11}
+body.follow-fullscreen .follow-sec>.sh{display:none}
+body.follow-fullscreen .coach{flex:1;min-height:0;border:0;border-radius:0;box-shadow:none;background:#090c11;grid-template-columns:1fr;overflow:hidden}
+body.follow-fullscreen .coach-list,body.follow-fullscreen .plan-tabs{display:none}
+body.follow-fullscreen .coach-main{height:100svh;padding:14px;display:grid;grid-template-columns:minmax(0,1fr) minmax(300px,360px);grid-template-rows:auto auto 1fr auto;grid-template-areas:"player stage" "player progress" "player next" "player actions";gap:12px}
+body.follow-fullscreen .coach-stage{grid-area:stage;align-items:flex-start;flex-direction:column;justify-content:flex-start;margin:0;padding:16px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.08);border-radius:14px}
+body.follow-fullscreen .timer{text-align:left;min-width:0;font-size:clamp(54px,10vh,92px)}
+body.follow-fullscreen .coach-title{font-size:clamp(24px,4vw,38px)}
+body.follow-fullscreen .coach-meta{font-size:13px}
+body.follow-fullscreen .coach-player{grid-area:player;margin:0;border-radius:16px;min-height:0}
+body.follow-fullscreen .coach-player img{height:100%;width:100%;aspect-ratio:auto;object-fit:contain}
+body.follow-fullscreen .coach-progress{grid-area:progress;margin:0}
+body.follow-fullscreen .coach-next{grid-area:next;margin:0;padding:14px 16px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.08);border-radius:14px;font-size:14px}
+body.follow-fullscreen .coach-actions{grid-area:actions;align-content:flex-end}
+body.follow-fullscreen .coach-btn{flex:1;min-width:0;padding:13px 12px;font-size:14px}
+body.follow-fullscreen .rep-panel{right:18px;bottom:18px;min-width:170px;padding:13px 18px}
+body.follow-fullscreen .rep-count{font-size:clamp(38px,7vh,64px)}
 footer{text-align:center;padding:36px 24px;color:var(--muted);font-size:12px;border-top:1px solid var(--border)}
 @media(max-width:900px){.card{grid-template-columns:1fr}.anim-wrap{border-right:0;border-bottom:1px solid var(--border);min-height:260px}.anim-img{min-height:260px}.cb{padding:18px}.cn{font-size:17px}.grid{gap:18px}.dp{max-height:none}.coach{grid-template-columns:1fr}.coach-list{border-left:0;border-top:1px solid var(--border);max-height:220px}.timer{text-align:left;min-width:auto;font-size:48px}.coach-stage{align-items:flex-start;flex-direction:column}.coach-title{font-size:24px}.follow-sec{min-height:100svh}.coach-main{padding:16px}.coach-player img{aspect-ratio:16/10}.rep-panel{right:10px;bottom:10px}.rep-count{font-size:26px}}
+@media(orientation:landscape) and (max-height:700px){
+  body.follow-fullscreen .coach-main{grid-template-columns:minmax(0,1fr) minmax(280px,340px);padding:10px;gap:10px}
+  body.follow-fullscreen .coach-stage{padding:12px}
+  body.follow-fullscreen .timer{font-size:clamp(48px,13vh,78px)}
+  body.follow-fullscreen .coach-title{font-size:clamp(22px,4vw,32px)}
+  body.follow-fullscreen .coach-next{font-size:12px;padding:11px 12px}
+  body.follow-fullscreen .coach-btn{padding:10px 8px;font-size:12px}
+}
 @media(max-width:600px){
   nav{height:50px;padding:0 12px;gap:5px}
   .logo{font-size:14px;margin-right:6px}
@@ -139,6 +167,16 @@ footer{text-align:center;padding:36px 24px;color:var(--muted);font-size:12px;bor
   .tgrid{grid-template-columns:1fr}
   .sched{grid-template-columns:repeat(4,1fr)}
   .dc{padding:10px 6px}
+  body.follow-fullscreen .coach-main{padding:10px;height:100svh;display:flex;flex-direction:column;gap:10px}
+  body.follow-fullscreen .coach-stage{padding:12px;gap:8px}
+  body.follow-fullscreen .timer{font-size:52px}
+  body.follow-fullscreen .coach-player{flex:1;min-height:0}
+  body.follow-fullscreen .coach-player img{height:100%;aspect-ratio:auto}
+  body.follow-fullscreen .coach-next{padding:10px 12px;font-size:12px}
+  body.follow-fullscreen .coach-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  body.follow-fullscreen .coach-btn{padding:11px 8px}
+  body.follow-fullscreen .rep-panel{right:10px;bottom:10px;min-width:138px;padding:10px 12px}
+  body.follow-fullscreen .rep-count{font-size:34px}
   footer{padding:28px 16px}
 }
 </style>
@@ -203,6 +241,7 @@ footer{text-align:center;padding:36px 24px;color:var(--muted);font-size:12px;bor
         <button class="coach-btn" type="button" id="coachNextBtn">下一步</button>
         <button class="coach-btn" type="button" id="coachReset">重置</button>
         <button class="coach-btn voice-on" type="button" id="coachVoice">语音 开</button>
+        <button class="coach-btn" type="button" id="coachFullscreen">跟练全屏</button>
       </div>
     </div>
     <div class="coach-list" id="coachList"></div>
@@ -811,8 +850,25 @@ function countRep(){const item=currentItem();if(!isRepItem(item)||coach.phase!==
 function tickCoach(){if(!coach.running)return;const item=currentItem();if(coach.phase==='work'&&isRepItem(item)){coach.repTick+=1;if(coach.repTick>=coach.repPace){coach.repTick=0;countRep()}}else{coach.remaining-=1;if(coach.remaining>0&&coach.remaining<=3&&coach.lastCountdown!==coach.remaining){coach.lastCountdown=coach.remaining;speak(String(coach.remaining),false)}if(coach.remaining<=0)advanceCoach();renderCoach()}}
 function startPauseCoach(){if(coach.finished)selectPlan(coach.planKey);if(coach.running){stopTimer();speak('已暂停。')}else{coach.running=true;if(!coach.timer&&!coach.autoAdvance)coach.timer=setInterval(tickCoach,1000);announceCurrent(coach.phase==='work'?'开始':'继续');const img=currentItem()&&document.getElementById(currentItem().id);if(img)img.closest('.card')?.scrollIntoView({behavior:'smooth',block:'center'})}renderCoach()}
 function nextCoachStep(){stopTimer();advanceCoach()}
+async function toggleFollowFullscreen(){
+  const entering=!document.body.classList.contains('follow-fullscreen');
+  document.body.classList.toggle('follow-fullscreen',entering);
+  const btn=document.getElementById('coachFullscreen');
+  if(btn){
+    btn.textContent=entering?'退出全屏':'跟练全屏';
+    btn.classList.toggle('fullscreen-on',entering);
+  }
+  document.getElementById('follow')?.scrollIntoView({behavior:'smooth',block:'start'});
+  try{
+    if(entering&&document.documentElement.requestFullscreen&&!document.fullscreenElement){
+      await document.documentElement.requestFullscreen();
+    }else if(!entering&&document.fullscreenElement&&document.exitFullscreen){
+      await document.exitFullscreen();
+    }
+  }catch(e){}
+}
 function jumpToAction(i){stopTimer();coach.index=i;coach.set=1;coach.finished=false;preparePhase('work');renderCoach();document.getElementById('follow').scrollIntoView({behavior:'smooth',block:'start'})}
-document.addEventListener('DOMContentLoaded',()=>{document.querySelectorAll('.plan-tab').forEach(btn=>btn.addEventListener('click',()=>selectPlan(btn.dataset.plan)));document.getElementById('coachStart').addEventListener('click',startPauseCoach);document.getElementById('coachNextBtn').addEventListener('click',nextCoachStep);document.getElementById('coachReset').addEventListener('click',()=>{selectPlan(coach.planKey);speak('已重置。')});document.getElementById('coachVoice').addEventListener('click',toggleVoice);renderCoach()});
+document.addEventListener('DOMContentLoaded',()=>{document.querySelectorAll('.plan-tab').forEach(btn=>btn.addEventListener('click',()=>selectPlan(btn.dataset.plan)));document.getElementById('coachStart').addEventListener('click',startPauseCoach);document.getElementById('coachNextBtn').addEventListener('click',nextCoachStep);document.getElementById('coachReset').addEventListener('click',()=>{selectPlan(coach.planKey);speak('已重置。')});document.getElementById('coachVoice').addEventListener('click',toggleVoice);document.getElementById('coachFullscreen').addEventListener('click',toggleFollowFullscreen);document.addEventListener('fullscreenchange',()=>{if(!document.fullscreenElement&&document.body.classList.contains('follow-fullscreen')){const btn=document.getElementById('coachFullscreen');document.body.classList.remove('follow-fullscreen');if(btn){btn.textContent='跟练全屏';btn.classList.remove('fullscreen-on')}}});renderCoach()});
 </script>
 </body>
 </html>
