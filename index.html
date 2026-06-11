@@ -187,6 +187,46 @@ footer{text-align:center;padding:36px 24px;color:var(--muted);font-size:12px;bor
   body.follow-fullscreen .rep-count{font-size:34px}
   footer{padding:28px 16px}
 }
+body.follow-fullscreen.immersive-coach{background:#05070a}
+body.follow-fullscreen.immersive-coach .coach{position:relative;isolation:isolate;background:#05070a}
+body.follow-fullscreen.immersive-coach .coach::before{content:"";position:absolute;inset:-22px;z-index:0;background-image:var(--coach-bg);background-size:cover;background-position:center;filter:blur(22px) saturate(1.08);opacity:.42;transform:scale(1.05)}
+body.follow-fullscreen.immersive-coach .coach::after{content:"";position:absolute;inset:0;z-index:1;background:radial-gradient(circle at 52% 45%,rgba(255,255,255,.06),transparent 42%),linear-gradient(90deg,rgba(5,7,10,.72),rgba(5,7,10,.08) 28%,rgba(5,7,10,.08) 68%,rgba(5,7,10,.68)),linear-gradient(180deg,rgba(5,7,10,.5),transparent 24%,rgba(5,7,10,.72))}
+body.follow-fullscreen.immersive-coach .coach-main{position:relative;z-index:2;height:100svh;padding:0;display:block;overflow:hidden}
+body.follow-fullscreen.immersive-coach .coach-player{position:absolute;inset:0;z-index:1;margin:0;border:0;border-radius:0;background:transparent}
+body.follow-fullscreen.immersive-coach .coach-player img{width:100%;height:100%;aspect-ratio:auto;object-fit:contain;background:transparent;filter:contrast(1.04) saturate(1.02)}
+body.follow-fullscreen.immersive-coach .coach-stage{position:absolute;z-index:4;left:max(18px,env(safe-area-inset-left));top:max(14px,env(safe-area-inset-top));width:min(46vw,450px);margin:0;padding:12px 14px;display:grid;grid-template-columns:1fr auto;align-items:start;gap:14px;background:rgba(7,10,16,.54);border:1px solid rgba(255,255,255,.11);border-radius:14px;box-shadow:0 18px 42px rgba(0,0,0,.34);backdrop-filter:blur(14px)}
+body.follow-fullscreen.immersive-coach .coach-kicker{font-size:11px;color:rgba(245,247,250,.72)}
+body.follow-fullscreen.immersive-coach .coach-title{font-size:clamp(22px,3.2vw,36px);line-height:1.08;text-shadow:0 2px 18px rgba(0,0,0,.62)}
+body.follow-fullscreen.immersive-coach .coach-meta{font-size:12px;color:rgba(232,236,245,.72);margin-top:6px}
+body.follow-fullscreen.immersive-coach .timer{min-width:0;text-align:right;font-size:clamp(42px,11vh,96px);line-height:.92;text-shadow:0 12px 36px rgba(232,133,74,.28)}
+body.follow-fullscreen.immersive-coach .rep-panel{z-index:5;right:max(20px,env(safe-area-inset-right));bottom:max(24px,env(safe-area-inset-bottom));min-width:min(30vw,260px);padding:16px 22px;border-radius:18px;background:rgba(7,10,16,.7);border:1px solid rgba(255,255,255,.14);box-shadow:0 20px 56px rgba(0,0,0,.48);backdrop-filter:blur(16px)}
+body.follow-fullscreen.immersive-coach .rep-label{font-size:12px;color:rgba(232,236,245,.68)}
+body.follow-fullscreen.immersive-coach .rep-count{font-size:clamp(52px,15vh,118px);line-height:.95}
+body.follow-fullscreen.immersive-coach .rep-hint{font-size:12px;color:rgba(232,236,245,.62)}
+body.follow-fullscreen.immersive-coach .coach-progress{position:absolute;z-index:5;left:0;right:0;bottom:0;height:6px;margin:0;border:0;border-radius:0;background:rgba(255,255,255,.14)}
+body.follow-fullscreen.immersive-coach .coach-next{position:absolute;z-index:4;left:max(18px,env(safe-area-inset-left));bottom:max(22px,env(safe-area-inset-bottom));max-width:44vw;margin:0;padding:10px 13px;border-radius:12px;background:rgba(7,10,16,.5);border:1px solid rgba(255,255,255,.1);color:rgba(232,236,245,.78);backdrop-filter:blur(12px)}
+body.follow-fullscreen.immersive-coach .coach-actions{position:absolute;z-index:6;right:max(18px,env(safe-area-inset-right));top:max(14px,env(safe-area-inset-top));width:min(34vw,360px);display:flex;justify-content:flex-end;gap:8px;opacity:.16;transition:opacity .22s ease}
+body.follow-fullscreen.immersive-coach.controls-visible .coach-actions,body.follow-fullscreen.immersive-coach .coach-actions:hover{opacity:1}
+body.follow-fullscreen.immersive-coach .coach-btn{flex:0 1 auto;min-width:0;padding:9px 11px;border-radius:999px;background:rgba(7,10,16,.62);border-color:rgba(255,255,255,.14);box-shadow:0 10px 30px rgba(0,0,0,.28);backdrop-filter:blur(12px)}
+@media(orientation:landscape) and (max-height:700px){
+  body.follow-fullscreen.immersive-coach .coach-main{display:block;padding:0}
+  body.follow-fullscreen.immersive-coach .coach-stage{width:min(42vw,420px);padding:10px 12px}
+  body.follow-fullscreen.immersive-coach .coach-title{font-size:clamp(20px,3vw,32px)}
+  body.follow-fullscreen.immersive-coach .coach-meta{font-size:11px}
+  body.follow-fullscreen.immersive-coach .timer{font-size:clamp(40px,12vh,78px)}
+  body.follow-fullscreen.immersive-coach .rep-panel{min-width:min(28vw,240px);padding:14px 20px}
+  body.follow-fullscreen.immersive-coach .rep-count{font-size:clamp(48px,15vh,98px)}
+  body.follow-fullscreen.immersive-coach .coach-next{max-width:42vw;font-size:12px}
+}
+@media(max-width:600px){
+  body.follow-fullscreen.immersive-coach .coach-stage{left:10px;right:10px;top:10px;width:auto}
+  body.follow-fullscreen.immersive-coach .coach-title{font-size:22px}
+  body.follow-fullscreen.immersive-coach .timer{font-size:46px}
+  body.follow-fullscreen.immersive-coach .rep-panel{right:10px;bottom:18px;min-width:148px;padding:11px 13px;border-radius:14px}
+  body.follow-fullscreen.immersive-coach .rep-count{font-size:40px}
+  body.follow-fullscreen.immersive-coach .coach-next{left:10px;bottom:18px;max-width:48vw;font-size:11px}
+  body.follow-fullscreen.immersive-coach .coach-actions{left:10px;right:10px;top:auto;bottom:76px;width:auto;justify-content:center;opacity:.2}
+}
 </style>
 </head>
 <body>
@@ -820,7 +860,7 @@ function formatPhase(){return coach.finished?'训练完成':coach.phase==='work'
 function isRepItem(item=currentItem()){return !!item.reps}
 function itemDuration(item=currentItem()){return isRepItem(item)?item.reps*coach.repPace:item.work}
 function nextLabel(){if(coach.finished)return'已完成今天训练';const item=currentItem();if(coach.phase==='work'&&coach.set<item.sets)return'下一个：休息 '+item.rest+' 秒，然后继续 '+item.name+' 第 '+(coach.set+1)+' 组';if(coach.phase==='rest')return'下一个：'+item.name+' 第 '+coach.set+'/'+item.sets+' 组';const next=currentPlan().items[coach.index+1];return next?'下一个动作：'+next.name:'下一个：完成收操'}
-function renderCoach(){const plan=currentPlan(),item=currentItem();document.getElementById('coachState').textContent=formatPhase();document.getElementById('coachTitle').textContent=coach.finished?plan.title+'完成':item.name;document.getElementById('coachMeta').textContent=coach.finished?'共完成 '+totalSets(plan)+' 组':'第 '+(coach.index+1)+'/'+plan.items.length+' 个动作 · 第 '+coach.set+'/'+item.sets+' 组 · 目标：'+item.target;document.getElementById('coachTimer').textContent=coach.phase==='rest'?padTime(Math.max(0,coach.remaining)):(isRepItem(item)?String(Math.min(coach.rep,item.reps)):padTime(Math.max(0,coach.remaining)));document.getElementById('coachMode').textContent=coach.phase==='rest'?'休息倒计时':isRepItem(item)?'次数计数':'时间计时';document.getElementById('coachRep').textContent=coach.phase==='rest'?padTime(Math.max(0,coach.remaining)):(isRepItem(item)?coach.rep+' / '+item.reps:padTime(Math.max(0,coach.remaining)));document.getElementById('coachHint').textContent=coach.phase==='rest'?'准备下一组，调整呼吸':isRepItem(item)?'显示和语音同步计数':'保持动作质量，听倒计时';const originalImg=document.getElementById(item.id);if(originalImg){document.getElementById('coachImage').src=originalImg.getAttribute('src');document.getElementById('coachImage').alt=item.name+'分解图'}const elapsed=coach.phase==='rest'?Math.max(0,coach.duration-coach.remaining):(isRepItem(item)?coach.rep*coach.repPace:Math.max(0,coach.duration-coach.remaining));document.getElementById('coachBar').style.width=coach.finished?'100%':Math.round(elapsed/coach.duration*100)+'%';document.getElementById('coachNext').textContent=nextLabel();document.getElementById('coachStart').textContent=coach.running?'暂停':coach.finished?'重新开始':'开始';document.querySelectorAll('.plan-tab').forEach(btn=>btn.classList.toggle('active',btn.dataset.plan===coach.planKey));document.querySelectorAll('.card.coach-current').forEach(card=>card.classList.remove('coach-current'));if(!coach.finished&&item){const img=document.getElementById(item.id);const card=img&&img.closest('.card');if(card)card.classList.add('coach-current')}const list=document.getElementById('coachList');list.innerHTML=plan.items.map((it,i)=>{const done=coach.finished||i<coach.index;const active=!coach.finished&&i===coach.index;const mode=it.reps?it.reps+'次计数':it.work+'秒计时';return '<div class="coach-item '+(active?'active ':'')+(done?'done':'')+'" data-index="'+i+'"><div class="coach-num">'+(i+1)+'</div><div><div>'+it.name+'</div><div class="coach-small">'+it.sets+'组 · '+mode+' · '+it.rest+'秒休息</div></div><div class="coach-small">'+it.target+'</div></div>'}).join('');list.querySelectorAll('.coach-item').forEach(row=>row.addEventListener('click',()=>jumpToAction(Number(row.dataset.index))))}
+function renderCoach(){const plan=currentPlan(),item=currentItem();document.getElementById('coachState').textContent=formatPhase();document.getElementById('coachTitle').textContent=coach.finished?plan.title+'完成':item.name;document.getElementById('coachMeta').textContent=coach.finished?'共完成 '+totalSets(plan)+' 组':'第 '+(coach.index+1)+'/'+plan.items.length+' 个动作 · 第 '+coach.set+'/'+item.sets+' 组 · 目标：'+item.target;document.getElementById('coachTimer').textContent=coach.phase==='rest'?padTime(Math.max(0,coach.remaining)):(isRepItem(item)?String(Math.min(coach.rep,item.reps)):padTime(Math.max(0,coach.remaining)));document.getElementById('coachMode').textContent=coach.phase==='rest'?'休息倒计时':isRepItem(item)?'次数计数':'时间计时';document.getElementById('coachRep').textContent=coach.phase==='rest'?padTime(Math.max(0,coach.remaining)):(isRepItem(item)?coach.rep+' / '+item.reps:padTime(Math.max(0,coach.remaining)));document.getElementById('coachHint').textContent=coach.phase==='rest'?'准备下一组，调整呼吸':isRepItem(item)?'显示和语音同步计数':'保持动作质量，听倒计时';const originalImg=document.getElementById(item.id);if(originalImg){const src=originalImg.getAttribute('src');document.getElementById('coachImage').src=src;document.querySelector('.coach')?.style.setProperty('--coach-bg','url("'+src+'")');document.getElementById('coachImage').alt=item.name+'分解图'}const elapsed=coach.phase==='rest'?Math.max(0,coach.duration-coach.remaining):(isRepItem(item)?coach.rep*coach.repPace:Math.max(0,coach.duration-coach.remaining));document.getElementById('coachBar').style.width=coach.finished?'100%':Math.round(elapsed/coach.duration*100)+'%';document.getElementById('coachNext').textContent=nextLabel();document.getElementById('coachStart').textContent=coach.running?'暂停':coach.finished?'重新开始':'开始';document.querySelectorAll('.plan-tab').forEach(btn=>btn.classList.toggle('active',btn.dataset.plan===coach.planKey));document.querySelectorAll('.card.coach-current').forEach(card=>card.classList.remove('coach-current'));if(!coach.finished&&item){const img=document.getElementById(item.id);const card=img&&img.closest('.card');if(card)card.classList.add('coach-current')}const list=document.getElementById('coachList');list.innerHTML=plan.items.map((it,i)=>{const done=coach.finished||i<coach.index;const active=!coach.finished&&i===coach.index;const mode=it.reps?it.reps+'次计数':it.work+'秒计时';return '<div class="coach-item '+(active?'active ':'')+(done?'done':'')+'" data-index="'+i+'"><div class="coach-num">'+(i+1)+'</div><div><div>'+it.name+'</div><div class="coach-small">'+it.sets+'组 · '+mode+' · '+it.rest+'秒休息</div></div><div class="coach-small">'+it.target+'</div></div>'}).join('');list.querySelectorAll('.coach-item').forEach(row=>row.addEventListener('click',()=>jumpToAction(Number(row.dataset.index))))}
 function preparePhase(nextPhase='work'){const item=currentItem();if(coach.autoAdvance){clearTimeout(coach.autoAdvance);coach.autoAdvance=null}coach.phase=nextPhase;coach.duration=nextPhase==='work'?itemDuration(item):item.rest;coach.remaining=coach.duration;coach.rep=0;coach.pendingRep=null;coach.repTick=0;coach.lastCountdown=null}
 function stopTimer(){if(coach.timer)clearInterval(coach.timer);if(coach.autoAdvance)clearTimeout(coach.autoAdvance);coach.timer=null;coach.autoAdvance=null;coach.pendingRep=null;coach.running=false}
 function selectPlan(planKey){const voice=coach.voice;stopTimer();const first=workoutPlans[planKey].items[0];coach={planKey,index:0,set:1,phase:'work',remaining:first.reps?first.reps*2:first.work,duration:first.reps?first.reps*2:first.work,rep:0,pendingRep:null,repPace:2,repTick:0,running:false,timer:null,finished:false,voice,lastCountdown:null,autoAdvance:null};renderCoach()}
@@ -858,9 +898,18 @@ function countRep(){const item=currentItem();if(!isRepItem(item)||coach.phase!==
 function tickCoach(){if(!coach.running)return;const item=currentItem();if(coach.phase==='work'&&isRepItem(item)){coach.repTick+=1;if(coach.repTick>=coach.repPace){coach.repTick=0;countRep()}}else{coach.remaining-=1;if(coach.remaining>0&&coach.remaining<=3&&coach.lastCountdown!==coach.remaining){coach.lastCountdown=coach.remaining;speak(String(coach.remaining),false)}if(coach.remaining<=0)advanceCoach();renderCoach()}}
 function startPauseCoach(){if(coach.finished)selectPlan(coach.planKey);if(coach.running){stopTimer();speak('已暂停。')}else{coach.running=true;if(!coach.timer&&!coach.autoAdvance)coach.timer=setInterval(tickCoach,1000);announceCurrent(coach.phase==='work'?'开始':'继续');const img=currentItem()&&document.getElementById(currentItem().id);if(img)img.closest('.card')?.scrollIntoView({behavior:'smooth',block:'center'})}renderCoach()}
 function nextCoachStep(){stopTimer();advanceCoach()}
+let coachControlsTimer=null;
+function revealCoachControls(){
+  if(!document.body.classList.contains('follow-fullscreen'))return;
+  document.body.classList.add('controls-visible');
+  if(coachControlsTimer)clearTimeout(coachControlsTimer);
+  coachControlsTimer=setTimeout(()=>document.body.classList.remove('controls-visible'),2600);
+}
 async function toggleFollowFullscreen(){
   const entering=!document.body.classList.contains('follow-fullscreen');
   document.body.classList.toggle('follow-fullscreen',entering);
+  document.body.classList.toggle('immersive-coach',entering);
+  document.body.classList.toggle('controls-visible',entering);
   const btn=document.getElementById('coachFullscreen');
   if(btn){
     btn.textContent=entering?'退出全屏':'跟练全屏';
@@ -876,7 +925,23 @@ async function toggleFollowFullscreen(){
   }catch(e){}
 }
 function jumpToAction(i){stopTimer();coach.index=i;coach.set=1;coach.finished=false;preparePhase('work');renderCoach();document.getElementById('follow').scrollIntoView({behavior:'smooth',block:'start'})}
-document.addEventListener('DOMContentLoaded',()=>{document.querySelectorAll('.plan-tab').forEach(btn=>btn.addEventListener('click',()=>selectPlan(btn.dataset.plan)));document.getElementById('coachStart').addEventListener('click',startPauseCoach);document.getElementById('coachNextBtn').addEventListener('click',nextCoachStep);document.getElementById('coachReset').addEventListener('click',()=>{selectPlan(coach.planKey);speak('已重置。')});document.getElementById('coachVoice').addEventListener('click',toggleVoice);document.getElementById('coachFullscreen').addEventListener('click',toggleFollowFullscreen);document.addEventListener('fullscreenchange',()=>{if(!document.fullscreenElement&&document.body.classList.contains('follow-fullscreen')){const btn=document.getElementById('coachFullscreen');document.body.classList.remove('follow-fullscreen');if(btn){btn.textContent='跟练全屏';btn.classList.remove('fullscreen-on')}}});renderCoach()});
+document.addEventListener('DOMContentLoaded',()=>{
+  document.querySelectorAll('.plan-tab').forEach(btn=>btn.addEventListener('click',()=>selectPlan(btn.dataset.plan)));
+  document.getElementById('coachStart').addEventListener('click',startPauseCoach);
+  document.getElementById('coachNextBtn').addEventListener('click',nextCoachStep);
+  document.getElementById('coachReset').addEventListener('click',()=>{selectPlan(coach.planKey);speak('已重置。')});
+  document.getElementById('coachVoice').addEventListener('click',toggleVoice);
+  document.getElementById('coachFullscreen').addEventListener('click',toggleFollowFullscreen);
+  document.addEventListener('fullscreenchange',()=>{
+    if(!document.fullscreenElement&&document.body.classList.contains('follow-fullscreen')){
+      const btn=document.getElementById('coachFullscreen');
+      document.body.classList.remove('follow-fullscreen','immersive-coach','controls-visible');
+      if(btn){btn.textContent='跟练全屏';btn.classList.remove('fullscreen-on')}
+    }
+  });
+  document.getElementById('follow').addEventListener('pointerdown',revealCoachControls);
+  renderCoach();
+});
 if('serviceWorker' in navigator){
   window.addEventListener('load',()=>navigator.serviceWorker.register('/service-worker.js').catch(()=>{}));
 }
